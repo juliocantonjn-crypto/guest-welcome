@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sligo Retreat 🌊 Your Sligo Home!</title>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sun:#FFB800;--sky:#00BFFF;--grass:#3CB371;--coral:#FF6B6B;
+  --purple:#9B59B6;--mint:#1ABC9C;--pink:#FF69B4;--navy:#1A1A2E;
+  --white:#FFFFFF;--cream:#FFFDF0;--dark:#2C2C2C;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--coral),var(--purple));border-radius:3px}
+
+/* ══ ANIMATED BG BLOBS ══ */
+.blob-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.12;animation:blobFloat ease-in-out infinite alternate}
+@keyframes blobFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,30px) scale(1.1)}}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(255,253,240,.92);backdrop-filter:blur(14px);
+  border-bottom:3px solid transparent;
+  border-image:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--purple)) 1;
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.1)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:1rem 5vw;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Pacifico',cursive;font-size:1.4rem;background:linear-gradient(135deg,var(--coral),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:.3rem;list-style:none}
+.nav-links a{
+  font-size:.7rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--dark);padding:.45rem .9rem;border-radius:50px;
+  transition:all .25s;
+}
+.nav-links a:hover{background:var(--sun);color:var(--dark);transform:scale(1.05) rotate(-1deg)}
+.nav-ham{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:.4rem}
+.nav-ham span{display:block;width:22px;height:2.5px;background:var(--dark);border-radius:2px;transition:.3s}
+
+/* mob menu */
+.mob-menu{display:none;position:fixed;inset:0;z-index:998;background:var(--navy);flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:'Pacifico',cursive;font-size:2rem;color:var(--white);padding:1rem;transition:color .3s}
+.mob-menu a:hover{color:var(--sun)}
+.mob-close{position:absolute;top:1.5rem;right:5vw;background:none;border:none;color:rgba(255,255,255,.5);font-size:2rem;cursor:pointer}
+
+/* ══ HERO ══ */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:120px 5vw 5vh;text-align:center;position:relative;overflow:hidden;
+}
+.hero-bg-gradient{
+  position:absolute;inset:0;z-index:0;
+  background:linear-gradient(160deg,#FFF9E6 0%,#E8F8FF 35%,#E8FFF4 65%,#FFF0F0 100%);
+}
+/* floating emojis */
+.floaty{position:absolute;font-size:2rem;animation:floatUp linear infinite;opacity:.6;z-index:1;pointer-events:none}
+@keyframes floatUp{0%{transform:translateY(110vh) rotate(0deg);opacity:0}10%{opacity:.6}90%{opacity:.4}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:linear-gradient(135deg,var(--sun),var(--coral));
+  color:var(--white);font-weight:900;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:.5rem 1.2rem;border-radius:50px;margin-bottom:1.5rem;
+  position:relative;z-index:5;
+  box-shadow:0 4px 20px rgba(255,107,107,.35);
+  animation:badgePop .6s cubic-bezier(.34,1.56,.64,1) 0.5s both;
+}
+@keyframes badgePop{from{transform:scale(0) rotate(-5deg)}to{transform:scale(1) rotate(0)}}
+.hero-badge::before{content:'🏠';margin-right:.3rem;font-size:1rem}
+
+.hero-title{
+  font-family:'Righteous',sans-serif;
+  font-size:clamp(3rem,10vw,8rem);
+  line-height:.95;
+  position:relative;z-index:5;
+  margin-bottom:.5rem;
+}
+.hero-title .line1{
+  display:block;
+  background:linear-gradient(135deg,var(--coral) 0%,var(--purple) 50%,var(--sky) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-title .line2{
+  display:block;
+  background:linear-gradient(135deg,var(--sun) 0%,var(--grass) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:clamp(1rem,2.5vw,1.3rem);font-weight:700;
+  color:var(--dark);opacity:.7;position:relative;z-index:5;
+  margin-bottom:.5rem;
+}
+.hero-addr{
+  font-size:.8rem;font-weight:600;color:var(--dark);opacity:.5;
+  position:relative;z-index:5;margin-bottom:2.5rem;letter-spacing:.05em;
+}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:5}
+.btn{
+  font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:900;
+  padding:.9rem 2rem;border-radius:50px;border:none;cursor:pointer;
+  transition:transform .2s,box-shadow .2s;display:inline-block;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-main{background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;box-shadow:0 6px 20px rgba(155,89,182,.35)}
+.btn-sec{background:linear-gradient(135deg,var(--sun),var(--grass));color:#fff;box-shadow:0 6px 20px rgba(60,179,113,.3)}
+.btn-ghost{background:transparent;border:3px solid var(--dark);color:var(--dark)}
+.btn-ghost:hover{background:var(--dark);color:var(--white)}
+
+/* hero bounce arrow */
+.bounce-arrow{position:relative;z-index:5;margin-top:3rem;font-size:1.5rem;animation:bounce 1.5s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+/* ══ WIGGLY DIVIDER ══ */
+.wiggle{display:block;width:100%;overflow:hidden;line-height:0}
+.wiggle svg{display:block}
+
+/* ══ SECTION ══ */
+.section{padding:5rem 5vw}
+.container{max-width:1100px;margin:0 auto}
+
+/* section colours */
+.s-yellow{background:linear-gradient(135deg,#FFFDE7,#FFF8D6)}
+.s-blue{background:linear-gradient(135deg,#E3F6FF,#D0EEFF)}
+.s-green{background:linear-gradient(135deg,#E8FFF4,#D4F5E5)}
+.s-pink{background:linear-gradient(135deg,#FFF0F5,#FFE4EE)}
+.s-purple{background:linear-gradient(135deg,#F3E8FF,#EBD8FF)}
+.s-dark{background:var(--navy);color:var(--white)}
+
+.sec-tag{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--sun);color:var(--dark);
+  padding:.35rem 1rem;border-radius:50px;margin-bottom:1.2rem;
+}
+.sec-h2{
+  font-family:'Righteous',sans-serif;
+  font-size:clamp(2rem,5vw,3.5rem);line-height:1;
+  margin-bottom:1.2rem;
+}
+.sec-body{font-size:1rem;line-height:1.8;color:#555;max-width:550px}
+.s-dark .sec-body{color:rgba(255,255,255,.65)}
+
+/* ══ FUN CARDS ══ */
+.fun-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;margin-top:2.5rem}
+.fun-card{
+  background:var(--white);border-radius:20px;padding:2rem 1.8rem;
+  box-shadow:0 4px 20px rgba(0,0,0,.07);
+  border:3px solid transparent;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+  position:relative;overflow:hidden;
+}
+.fun-card::before{
+  content:'';position:absolute;inset:0;border-radius:18px;
+  background:linear-gradient(135deg,var(--card-a),var(--card-b));
+  opacity:0;transition:opacity .3s;
+}
+.fun-card:hover{transform:translateY(-6px) rotate(.5deg);box-shadow:0 16px 40px rgba(0,0,0,.12)}
+.fun-card:hover::before{opacity:.06}
+.fun-card:hover{border-color:var(--card-a)}
+.card-emoji{font-size:2.5rem;margin-bottom:.8rem;display:block;animation:wiggle 2s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(0)}15%{transform:rotate(-8deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-4deg)}60%{transform:rotate(4deg)}}
+.fun-card:nth-child(2) .card-emoji{animation-delay:.3s}
+.fun-card:nth-child(3) .card-emoji{animation-delay:.6s}
+.fun-card:nth-child(4) .card-emoji{animation-delay:.9s}
+.fun-card:nth-child(5) .card-emoji{animation-delay:1.2s}
+.fun-card:nth-child(6) .card-emoji{animation-delay:1.5s}
+.card-title{font-family:'Righteous',sans-serif;font-size:1.15rem;margin-bottom:.6rem;color:var(--dark)}
+.card-body{font-size:.88rem;line-height:1.75;color:#666}
+.card-tip{
+  margin-top:1rem;padding:.6rem .9rem;border-radius:10px;
+  background:var(--cream);font-size:.78rem;font-weight:700;color:var(--dark);
+  border-left:3px solid var(--sun);
+}
+
+/* ══ WIFI CARDS ══ */
+.wifi-duo{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
+.wifi-card{
+  background:var(--white);border-radius:20px;padding:2rem;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  border:3px solid var(--sky);
+  position:relative;overflow:hidden;text-align:center;
+}
+.wifi-card::after{
+  content:'📶';position:absolute;top:-10px;right:-5px;
+  font-size:5rem;opacity:.08;
+}
+.wifi-lbl{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:.4rem}
+.wifi-name{font-family:'Righteous',sans-serif;font-size:1.2rem;color:var(--dark);margin-bottom:1rem}
+.wifi-pass{
+  font-family:'Courier New',monospace;font-size:1.1rem;font-weight:700;
+  background:#F0F8FF;border:2px dashed var(--sky);
+  padding:.5rem 1rem;border-radius:10px;color:var(--dark);
+  display:block;margin-bottom:.8rem;letter-spacing:.08em;
+}
+.copy-btn{
+  font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--sky),var(--mint));color:#fff;
+  border:none;border-radius:50px;padding:.4rem 1.1rem;cursor:pointer;
+  transition:transform .2s;
+}
+.copy-btn:hover{transform:scale(1.07)}
+
+/* ══ EXPLORE GRID ══ */
+.exp-cat{margin-bottom:2.5rem}
+.exp-cat-title{
+  font-family:'Pacifico',cursive;font-size:1.3rem;
+  margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;
+}
+.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem}
+.exp-card{
+  background:rgba(255,255,255,.7);border-radius:16px;padding:1.4rem 1.2rem;
+  border:2px solid rgba(255,255,255,.9);
+  transition:transform .2s,box-shadow .2s;
+  backdrop-filter:blur(6px);
+}
+.exp-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.exp-type{font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.4rem}
+.exp-name{font-family:'Righteous',sans-serif;font-size:.95rem;color:var(--dark);margin-bottom:.4rem;line-height:1.2}
+.exp-desc{font-size:.8rem;line-height:1.6;color:#555}
+
+/* ══ STEPS ══ */
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+.step-card{
+  background:var(--white);border-radius:20px;padding:2rem 1.5rem;text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.07);
+  transition:transform .2s;
+}
+.step-card:hover{transform:translateY(-5px) rotate(-1deg)}
+.step-num{
+  font-family:'Pacifico',cursive;font-size:3rem;
+  background:linear-gradient(135deg,var(--coral),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;line-height:1;margin-bottom:.7rem;
+}
+.step-title{font-family:'Righteous',sans-serif;font-size:.95rem;color:var(--dark);margin-bottom:.5rem}
+.step-desc{font-size:.82rem;line-height:1.65;color:#666}
+
+/* ══ RULES ══ */
+.rule-cards{display:flex;flex-direction:column;gap:.7rem;margin-top:2rem}
+.rule-card{
+  display:flex;align-items:flex-start;gap:1rem;
+  background:var(--white);border-radius:14px;padding:1.2rem 1.4rem;
+  box-shadow:0 2px 12px rgba(0,0,0,.05);
+  transition:transform .2s;
+}
+.rule-card:hover{transform:translateX(6px)}
+.rule-emoji{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
+.rule-title{font-weight:800;font-size:.9rem;color:var(--dark);margin-bottom:.2rem}
+.rule-desc{font-size:.83rem;line-height:1.6;color:#666}
+
+/* ══ CONTACT ══ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem}
+.contact-card{
+  background:rgba(255,255,255,.15);border-radius:20px;padding:2rem;
+  border:2px solid rgba(255,255,255,.2);
+  transition:background .3s;text-align:center;
+}
+.contact-card:hover{background:rgba(255,255,255,.22)}
+.cc-emoji{font-size:2rem;margin-bottom:.7rem;display:block}
+.cc-lbl{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.4rem}
+.cc-val{font-family:'Righteous',sans-serif;font-size:1.15rem;color:var(--white);transition:color .3s}
+.cc-val:hover{color:var(--sun)}
+
+/* ══ LANGUAGES ══ */
+.lang-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+.lang-pill{
+  font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  padding:.5rem 1.1rem;border-radius:50px;border:2px solid rgba(255,255,255,.3);
+  color:var(--white);transition:all .25s;
+}
+.lang-pill:hover{background:var(--white);color:var(--navy)}
+
+/* ══ SOCIAL STRIP ══ */
+.social-strip{
+  background:linear-gradient(135deg,var(--pink),var(--coral),var(--sun));
+  padding:5rem 5vw;text-align:center;position:relative;overflow:hidden;
+}
+.social-strip::before{content:'📸';position:absolute;top:-20px;left:5%;font-size:8rem;opacity:.08}
+.social-strip::after{content:'🌊';position:absolute;bottom:-10px;right:5%;font-size:8rem;opacity:.1}
+.ss-title{font-family:'Pacifico',cursive;font-size:clamp(1.8rem,5vw,3rem);color:#fff;margin-bottom:1rem}
+.ss-sub{font-size:1rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:2rem;max-width:460px;margin-left:auto;margin-right:auto}
+.ss-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.ss-btn{
+  background:var(--white);font-family:'Nunito',sans-serif;font-weight:900;
+  font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:.8rem 2rem;border-radius:50px;color:var(--coral);
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
+.ss-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.ss-handle{font-family:'Pacifico',cursive;font-size:1.2rem;color:rgba(255,255,255,.7)}
+
+/* ══ FOOTER ══ */
+#footer{background:var(--navy);padding:0;overflow:hidden;position:relative}
+#footer::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% -20%,rgba(255,184,0,.08) 0%,transparent 60%);
+}
+
+/* address block */
+.foot-address{
+  text-align:center;padding:4rem 5vw 3rem;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  position:relative;z-index:2;
+}
+.foot-logo-big{
+  font-family:'Pacifico',cursive;font-size:clamp(2rem,6vw,3.5rem);
+  background:linear-gradient(135deg,var(--sun),var(--coral),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;margin-bottom:1.5rem;
+}
+.foot-addr-line{
+  font-size:.85rem;font-weight:600;letter-spacing:.12em;
+  color:rgba(255,255,255,.55);line-height:2;
+}
+.foot-phones{
+  margin-top:1.2rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
+}
+.foot-phone{
+  font-family:'Righteous',sans-serif;font-size:1rem;
+  color:rgba(255,255,255,.75);transition:color .3s;
+}
+.foot-phone:hover{color:var(--sun)}
+
+/* airbnb badge */
+.foot-airbnb{
+  display:inline-flex;align-items:center;gap:1rem;
+  background:rgba(255,56,92,.1);border:2px solid rgba(255,56,92,.35);
+  border-radius:16px;padding:1rem 2rem;margin-top:2rem;
+  transition:background .3s,border-color .3s;
+}
+.foot-airbnb:hover{background:rgba(255,56,92,.18);border-color:rgba(255,56,92,.7)}
+.airbnb-heart{font-size:1.6rem}
+.airbnb-text{text-align:left}
+.airbnb-small{font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block}
+.airbnb-big{font-family:'Righteous',sans-serif;font-size:1.4rem;color:#FF385C}
+
+/* sponsors */
+.sponsors-wrap{
+  padding:3rem 5vw;border-bottom:1px solid rgba(255,255,255,.08);
+  position:relative;z-index:2;
+}
+.sp-title{
+  font-size:.55rem;font-weight:800;letter-spacing:.45em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);text-align:center;margin-bottom:2.5rem;
+}
+.sp-grid{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
+  background:rgba(255,255,255,.05);
+  border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.05);
+}
+.sp-card{
+  background:#0D1528;padding:1.6rem 1rem;text-align:center;
+  transition:background .3s;
+  position:relative;overflow:hidden;
+}
+.sp-card:hover{background:#141D35}
+.sp-emoji{font-size:2rem;margin-bottom:.6rem;display:block;animation:wiggle 3s ease-in-out infinite}
+.sp-name{font-size:.68rem;font-weight:800;color:rgba(255,255,255,.65);margin-bottom:.2rem;letter-spacing:.03em}
+.sp-tag{font-size:.55rem;color:rgba(255,255,255,.28);line-height:1.4}
+.sp-card:nth-child(2) .sp-emoji{animation-delay:.5s}
+.sp-card:nth-child(3) .sp-emoji{animation-delay:1s}
+.sp-card:nth-child(4) .sp-emoji{animation-delay:1.5s}
+.sp-card:nth-child(5) .sp-emoji{animation-delay:2s}
+.sp-card:nth-child(6) .sp-emoji{animation-delay:2.5s}
+
+/* bottom bar */
+.foot-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem 5vw;flex-wrap:wrap;gap:1rem;
+  position:relative;z-index:2;
+}
+.fb-links{display:flex;gap:1.2rem;flex-wrap:wrap}
+.fb-links a{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);transition:color .3s}
+.fb-links a:hover{color:var(--sun)}
+.fb-copy{font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.05em}
+
+/* ══ REVEAL ══ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal-pop{opacity:0;transform:scale(.92);transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal-pop.in{opacity:1;transform:scale(1)}
+[data-d="1"]{transition-delay:.08s}[data-d="2"]{transition-delay:.16s}
+[data-d="3"]{transition-delay:.24s}[data-d="4"]{transition-delay:.32s}
+[data-d="5"]{transition-delay:.4s}[data-d="6"]{transition-delay:.48s}
+
+/* ══ RAINBOW HEADING ══ */
+.rainbow{
+  background:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--purple),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:200% 100%;animation:rainbowShift 4s linear infinite;
+}
+@keyframes rainbowShift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  .nav-links{display:none}.nav-ham{display:flex}
+  .wifi-duo{grid-template-columns:1fr}
+  .steps-row{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .sp-grid{grid-template-columns:repeat(3,1fr)}
+  .foot-bottom{flex-direction:column;text-align:center;align-items:center}
+  .fb-links{justify-content:center}
+  .foot-phones{flex-direction:column;align-items:center;gap:.5rem}
+}
+@media(max-width:480px){
+  .steps-row{grid-template-columns:1fr}
+  .sp-grid{grid-template-columns:repeat(2,1fr)}
+  .fun-grid{grid-template-columns:1fr}
+  .exp-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND BLOBS -->
+<div class="blob-bg">
+  <div class="blob" style="width:500px;height:500px;top:-100px;left:-150px;background:var(--sun);animation-duration:8s"></div>
+  <div class="blob" style="width:400px;height:400px;top:30%;right:-100px;background:var(--coral);animation-duration:10s;animation-delay:2s"></div>
+  <div class="blob" style="width:350px;height:350px;bottom:20%;left:-80px;background:var(--sky);animation-duration:7s;animation-delay:1s"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">The Sligo Retreat 🏡</a>
+    <ul class="nav-links">
+      <li><a href="#house">🏠 The House</a></li>
+      <li><a href="#explore">🗺️ Explore</a></li>
+      <li><a href="#access">🔑 Getting In</a></li>
+      <li><a href="#memory">📸 Memories</a></li>
+      <li><a href="#contact">📞 Contact</a></li>
+    </ul>
+    <button class="nav-ham" id="ham"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOB MENU -->
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-close" id="mob-close">✕</button>
+  <a href="#house" onclick="closeMob()">🏠 The House</a>
+  <a href="#explore" onclick="closeMob()">🗺️ Explore</a>
+  <a href="#access" onclick="closeMob()">🔑 Getting In</a>
+  <a href="#memory" onclick="closeMob()">📸 Memories</a>
+  <a href="#contact" onclick="closeMob()">📞 Contact</a>
+</div>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="hero-bg-gradient"></div>
+  <div id="floaties"></div>
+
+  <div class="hero-badge">Your Sligo Adventure Starts Here!</div>
+
+  <h1 class="hero-title">
+    <span class="line1">The Sligo</span>
+    <span class="line2">Retreat 🌊</span>
+  </h1>
+
+  <p class="hero-sub">Welcome to your home away from home! 🎉</p>
+  <p class="hero-addr">92 Caltragh Heights · Sligo · Ireland</p>
+
+  <div class="hero-btns">
+    <a href="#house" class="btn btn-main">🏠 See the House</a>
+    <a href="#explore" class="btn btn-sec">🗺️ Explore Sligo</a>
+  </div>
+
+  <div class="bounce-arrow">👇</div>
+</section>
+
+<!-- WIGGLE DOWN -->
+<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#FFFDF0" d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/></svg>
+
+<!-- ════ THE HOUSE ════ -->
+<section class="section s-yellow" id="house">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">🏡 The House</div>
+      <h2 class="sec-h2 rainbow">Everything You Need!</h2>
+      <p class="sec-body">Here's your complete guide to the house. Don't stress — we've made it super simple. Got questions? Just ring us! 📱</p>
+    </div>
+
+    <!-- WIFI -->
+    <div style="margin-top:2.5rem" class="reveal">
+      <h3 style="font-family:'Righteous',sans-serif;font-size:1.5rem;margin-bottom:.3rem">📶 WiFi — Get Connected!</h3>
+      <p style="font-size:.88rem;color:#666;margin-bottom:0">Two networks, same password. Easy! 🙌</p>
+    </div>
+    <div class="wifi-duo reveal">
+      <div class="wifi-card">
+        <div class="wifi-lbl">📡 Main Floor</div>
+        <div class="wifi-name">eir97665757</div>
+        <div class="wifi-pass" id="wp1">grRKACPmgK</div>
+        <button class="copy-btn" onclick="copyWifi('grRKACPmgK','c1')">Copy Password <span id="c1"></span></button>
+      </div>
+      <div class="wifi-card">
+        <div class="wifi-lbl">📡 Upstairs</div>
+        <div class="wifi-name">eir97665757_EXT</div>
+        <div class="wifi-pass" id="wp2">grRKACPmgK</div>
+        <button class="copy-btn" onclick="copyWifi('grRKACPmgK','c2')">Copy Password <span id="c2"></span></button>
+      </div>
+    </div>
+
+    <!-- HOUSE CARDS -->
+    <div class="fun-grid" style="margin-top:1.2rem">
+      <div class="fun-card reveal-pop" data-d="1" style="--card-a:#FFB800;--card-b:#FF6B6B">
+        <span class="card-emoji">🔥</span>
+        <div class="card-title">Heating</div>
+        <div class="card-body">Wall switch near the coats — flick to <strong>CONSTANT</strong> to turn on. The fireplace heats the radiators and hot water too!</div>
+        <div class="card-tip">💡 Turn it off when you head out — cheers!</div>
+      </div>
+      <div class="fun-card reveal-pop" data-d="2" style="--card-a:#00BFFF;--card-b:#1ABC9C">
+        <span class="card-emoji">💡</span>
+        <div class="card-title">Smart Lights</div>
+        <div class="card-body">Shed lights auto on at <strong>21:30</strong>, off at <strong>11:50</strong>. Living room lamp on at <strong>20:30</strong>, off at <strong>23:30</strong>. Just ask <strong>Alexa</strong> too!</div>
+        <div class="card-tip">⚠️ Don't unplug the smart devices please!</div>
+      </div>
+      <div class="fun-card reveal-pop" data-d="3" style="--card-a:#FF69B4;--card-b:#9B59B6">
+        <span class="card-emoji">♨️</span>
+        <div class="card-title">Hot Water</div>
+        <div class="card-body">Powered by the fireplace and solar panels working together. Need help getting it going? Just text us and we'll sort it remotely! 🙏</div>
+      </div>
+      <div class="fun-card reveal-pop" data-d="4" style="--card-a:#3CB371;--card-b:#1ABC9C">
+        <span class="card-emoji">⚽</span>
+        <div class="card-title">Outdoor Fun!</div>
+        <div class="card-body">Mini golf, basketball court AND a football in the back garden! ⛳🏀 All gear is in the outdoor container. Court lights available for evening games — please switch off after!</div>
+        <div class="card-tip">⚽ Go on — have a kickabout!</div>
+      </div>
+      <div class="fun-card reveal-pop" data-d="5" style="--card-a:#FFB800;--card-b:#3CB371">
+        <span class="card-emoji">🪑</span>
+        <div class="card-title">Shed Porch</div>
+        <div class="card-body">Outdoor table and chairs on the porch — perfect for morning coffee ☕ or evening drinks 🍷. Porch light button is beside the back garden door.</div>
+      </div>
+      <div class="fun-card reveal-pop" data-d="6" style="--card-a:#9B59B6;--card-b:#FF69B4">
+        <span class="card-emoji">📖</span>
+        <div class="card-title">Physical Memory Book</div>
+        <div class="card-body">There's also a physical journal on the table — leave a handwritten note before you go! 😊 Future guests LOVE reading them.</div>
+      </div>
+    </div>
+
+    <!-- GUEST MEMORY BOOK PADLET -->
+    <div class="reveal" id="memory" style="margin-top:2rem">
+      <div style="background:linear-gradient(135deg,#FF69B4,#9B59B6,#00BFFF);border-radius:24px;padding:2.5rem;position:relative;overflow:hidden">
+        <!-- sparkle bg -->
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,.12) 0%,transparent 60%);pointer-events:none"></div>
+        <div style="position:relative;z-index:2">
+          <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap">
+            <span style="font-size:2rem">📸</span>
+            <h3 style="font-family:'Righteous',sans-serif;font-size:1.6rem;color:#fff;line-height:1">Guest Memory Book</h3>
+            <span style="background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px">Online!</span>
+          </div>
+          <p style="font-size:.95rem;color:rgba(255,255,255,.9);line-height:1.75;max-width:620px;margin-bottom:1.5rem">
+            One of the best parts of hosting is seeing guests discover new places and make memories! We've created a shared online Guest Memory Book where you can leave a photo, a recommendation, or a short message for future guests. 🥰
+          </p>
+
+          <!-- HOW TO USE -->
+          <div style="background:rgba(255,255,255,.15);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;backdrop-filter:blur(6px)">
+            <p style="font-family:'Righteous',sans-serif;color:#fff;font-size:1rem;margin-bottom:1rem">How to use it:</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem">
+              <div style="display:flex;align-items:flex-start;gap:.6rem">
+                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">1</span>
+                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Click the link below</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:.6rem">
+                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">2</span>
+                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Select "+" or "Add Post"</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:.6rem">
+                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">3</span>
+                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Upload a photo (optional!)</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:.6rem">
+                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">4</span>
+                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Add a short note or memory</span>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:.6rem">
+                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">5</span>
+                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Post it for future guests! 🎉</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IDEAS -->
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem">
+            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">📸 Favourite photo</span>
+            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">🍽️ Restaurant you loved</span>
+            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">🌅 Best viewpoint</span>
+            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">💡 Tips for future guests</span>
+            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">❤️ Memorable moment</span>
+          </div>
+
+          <a href="https://padlet.com/juliocantonjn/guest-memory-book-6eapnjq9mvbpvhic" target="_blank"
+            style="display:inline-flex;align-items:center;gap:.8rem;background:#fff;color:#9B59B6;font-family:'Nunito',sans-serif;font-weight:900;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;padding:1rem 2rem;border-radius:50px;box-shadow:0 6px 25px rgba(0,0,0,.2);transition:transform .2s,box-shadow .2s;text-decoration:none"
+            onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 12px 35px rgba(0,0,0,.25)'"
+            onmouseout="this.style.transform='';this.style.boxShadow='0 6px 25px rgba(0,0,0,.2)'">
+            <span style="font-size:1.2rem">📖</span> View & Add Your Memory!
+          </a>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.65);margin-top:1.2rem;max-width:500px;line-height:1.6">
+            Thank you for being part of our guest community! We hope you'll enjoy reading memories from previous visitors — and perhaps leave one of your own. 🙏
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO LINK -->
+    <div class="reveal" style="margin-top:2rem;background:linear-gradient(135deg,var(--coral),var(--purple));border-radius:20px;padding:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem">
+      <div>
+        <p style="font-family:'Righteous',sans-serif;font-size:1.2rem;color:#fff;margin-bottom:.3rem">🎬 Video Guides for the House</p>
+        <p style="font-size:.88rem;color:rgba(255,255,255,.8)">Short videos covering heating, hot water and the essentials. Worth a watch!</p>
+      </div>
+      <a href="https://drive.google.com/drive/folders/1puCMTaW-IABgpZTt8w70DlqWIeo80uH1?usp=sharing" target="_blank" class="btn" style="background:#fff;color:var(--coral);font-size:.72rem">Watch Videos 👀</a>
+    </div>
+  </div>
+</section>
+
+<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#E3F6FF" d="M0,0 C240,60 480,0 720,30 C960,60 1200,0 1440,15 L1440,60 L0,60 Z"/></svg>
+
+<!-- ════ EXPLORE ════ -->
+<section class="section s-blue" id="explore">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">🗺️ Explore Sligo</div>
+      <h2 class="sec-h2">Sligo is <span class="rainbow">AMAZING</span> 🤩</h2>
+      <p class="sec-body">Mountains, waterfalls, beaches and ancient history — all basically on your doorstep. Here's what you absolutely can't miss!</p>
+    </div>
+
+    <div class="exp-cat reveal">
+      <h3 class="exp-cat-title">🏔️ Mountains & Forests</h3>
+      <div class="exp-grid">
+        <div class="exp-card" data-d="1"><div class="exp-type">🥾 Iconic Hike</div><div class="exp-name">Knocknarea — Queen Maeve's Trail</div><div class="exp-desc">Panoramic views from the top. An ancient queen's cairn. One of the best hikes in Ireland — genuinely.</div></div>
+        <div class="exp-card" data-d="2"><div class="exp-type">🌲 Forest Walk</div><div class="exp-name">Benbulben Forest Walk</div><div class="exp-desc">Beneath Sligo's famous flat-topped mountain. Magical on a misty morning (and they're pretty common here 😂)</div></div>
+        <div class="exp-card" data-d="3"><div class="exp-type">🌊 Lake & Woods</div><div class="exp-name">Hazelwood — Lough Gill</div><div class="exp-desc">Beautiful family walks along the lake that inspired W.B. Yeats. Very peaceful!</div></div>
+        <div class="exp-card" data-d="4"><div class="exp-type">🏔️ Hidden Valley</div><div class="exp-name">Gleniff Horseshoe</div><div class="exp-desc">A secret valley ringed by mountains. You'll feel like you've stumbled onto a movie set.</div></div>
+      </div>
+    </div>
+
+    <div class="exp-cat reveal">
+      <h3 class="exp-cat-title">💦 Waterfalls</h3>
+      <div class="exp-grid">
+        <div class="exp-card"><div class="exp-type">🚶 Easy Walk</div><div class="exp-name">Glencar Waterfall</div><div class="exp-desc">Short walk, absolutely stunning. Great for all ages!</div></div>
+        <div class="exp-card"><div class="exp-type">⚡ Wow Factor</div><div class="exp-name">Devil's Chimney</div><div class="exp-desc">Ireland's tallest waterfall. Only flows after rain — but when it does, WOW. Time it right! 🌧️</div></div>
+      </div>
+    </div>
+
+    <div class="exp-cat reveal">
+      <h3 class="exp-cat-title">🏖️ Beaches</h3>
+      <div class="exp-grid">
+        <div class="exp-card"><div class="exp-type">🏄 Surf Beach</div><div class="exp-name">Strandhill</div><div class="exp-desc">Wild and windswept. Brilliant for surfing or just walking the dunes at sunset 🌅</div></div>
+        <div class="exp-card"><div class="exp-type">👨‍👩‍👧 Family Friendly</div><div class="exp-name">Rosses Point</div><div class="exp-desc">Calmer water, gorgeous coastal walk. Benbulben views from the shoreline 😍</div></div>
+        <div class="exp-card"><div class="exp-type">🌊 Drama!</div><div class="exp-name">Mullaghmore Head</div><div class="exp-desc">Cliffs, crashing Atlantic waves. One of the most dramatic spots in all of Ireland.</div></div>
+        <div class="exp-card"><div class="exp-type">🤫 Secret Spot</div><div class="exp-name">Aughris Head Loop</div><div class="exp-desc">Sligo's best-kept secret coastal walk. Barely any tourists. Keep it between us 😉</div></div>
+      </div>
+    </div>
+
+    <div class="exp-cat reveal">
+      <h3 class="exp-cat-title">🏛️ History & Culture</h3>
+      <div class="exp-grid">
+        <div class="exp-card"><div class="exp-type">⏳ 5,000 Years Old!</div><div class="exp-name">Carrowmore Megalithic Cemetery</div><div class="exp-desc">One of Ireland's largest ancient tomb complexes. Mind-blowing that it even exists tbh.</div></div>
+        <div class="exp-card"><div class="exp-type">🏰 Town Centre</div><div class="exp-name">Sligo Abbey</div><div class="exp-desc">A gorgeous 13th-century ruin right in the heart of Sligo town. Great photos!</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#E8FFF4" d="M0,30 C360,0 720,60 1080,20 C1260,0 1380,40 1440,30 L1440,60 L0,60 Z"/></svg>
+
+<!-- ════ ACCESS ════ -->
+<section class="section s-green" id="access">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag">🔑 Getting In</div>
+      <h2 class="sec-h2">4 Easy Steps <span class="rainbow">to get inside!</span></h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-card reveal-pop" data-d="1">
+        <span class="step-num">1</span>
+        <div class="step-title">🚪 The Garden Gate</div>
+        <div class="step-desc">Push the lock on the gate <strong>upward</strong> — it pops open! Walk right in.</div>
+      </div>
+      <div class="step-card reveal-pop" data-d="2">
+        <span class="step-num">2</span>
+        <div class="step-title">🔒 Find the Key Box</div>
+        <div class="step-desc">On the <strong>left side</strong> — white and grey wall. The key lock box is mounted right there.</div>
+      </div>
+      <div class="step-card reveal-pop" data-d="3">
+        <span class="step-num">3</span>
+        <div class="step-title">📱 Your Code</div>
+        <div class="step-desc">We'll text you a one-time code <strong>1 hour before</strong> your check-in. Keep an eye on your phone!</div>
+      </div>
+      <div class="step-card reveal-pop" data-d="4">
+        <span class="step-num">4</span>
+        <div class="step-title">🎉 You're In!</div>
+        <div class="step-desc">The house is all yours! Message us any time — we're always happy to help.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:4rem" class="reveal">
+      <h3 style="font-family:'Righteous',sans-serif;font-size:1.8rem;margin-bottom:1.5rem">📋 A Few Simple Rules</h3>
+    </div>
+    <div class="rule-cards">
+      <div class="rule-card reveal" data-d="1"><div class="rule-emoji">❤️</div><div><div class="rule-title">Treat the house like your own home</div><div class="rule-desc">This is our home — we'd love it if you treated it with a bit of care. Thank you!</div></div></div>
+      <div class="rule-card reveal" data-d="2"><div class="rule-emoji">💡</div><div><div class="rule-title">Switch off lights & heating when you head out</div><div class="rule-desc">Saves energy and we really appreciate it! 🙏</div></div></div>
+      <div class="rule-card reveal" data-d="3"><div class="rule-emoji">🔌</div><div><div class="rule-title">Don't unplug the smart devices</div><div class="rule-desc">Alexa and the smart lights need to stay plugged in to keep working properly.</div></div></div>
+      <div class="rule-card reveal" data-d="4"><div class="rule-emoji">🔐</div><div><div class="rule-title">Lock up when you leave</div><div class="rule-desc">Doors and windows — locked whenever you head out. Just to keep everything safe!</div></div></div>
+      <div class="rule-card reveal" data-d="5"><div class="rule-emoji">📲</div><div><div class="rule-title">Something wrong? Just let us know!</div><div class="rule-desc">We're quick to respond. Don't suffer in silence — ring or message us and we'll sort it fast.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#1A1A2E" d="M0,15 C300,60 600,0 900,40 C1100,65 1300,10 1440,30 L1440,60 L0,60 Z"/></svg>
+
+<!-- ════ CONTACT ════ -->
+<section class="section s-dark" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <div class="sec-tag" style="background:var(--coral)">📞 Contact</div>
+      <h2 class="sec-h2 rainbow">We're Always Here! 👋</h2>
+      <p class="sec-body">Got a question? Need something sorted? Want a local tip? Ring us, text us, anything. We genuinely love hearing from our guests!</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card reveal-pop" data-d="1">
+        <span class="cc-emoji">📱</span>
+        <div class="cc-lbl">Primary</div>
+        <a href="tel:+353851513135" class="cc-val">+353 085 151 3135</a>
+      </div>
+      <div class="contact-card reveal-pop" data-d="2">
+        <span class="cc-emoji">☎️</span>
+        <div class="cc-lbl">Secondary</div>
+        <a href="tel:+34653950310" class="cc-val">+34 653 950 310</a>
+      </div>
+      <div class="contact-card reveal-pop" data-d="3">
+        <span class="cc-emoji">📸</span>
+        <div class="cc-lbl">Instagram</div>
+        <a href="https://www.instagram.com/thesligoretreat/" target="_blank" class="cc-val">@thesligoretreat</a>
+      </div>
+      <div class="contact-card reveal-pop" data-d="4">
+        <span class="cc-emoji">🎵</span>
+        <div class="cc-lbl">TikTok</div>
+        <a href="https://www.tiktok.com/@thesligoretreat" target="_blank" class="cc-val">@thesligoretreat</a>
+      </div>
+    </div>
+
+    <div style="margin-top:4rem" class="reveal">
+      <div class="sec-tag" style="background:var(--mint)">🌍 Languages</div>
+      <p style="font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:.5rem">This guide is also available in:</p>
+      <div class="lang-row">
+        <a href="https://docs.google.com/document/d/1NSf2-adAR0unpbHWsAfCBWyroJA7uBAhtmJWuxmKxoM/edit" target="_blank" class="lang-pill">🇪🇸 Español</a>
+        <a href="https://docs.google.com/document/d/1ORws0kV1GsQacg87iMrQInDq4DPQApiVWY4EbeC-bNM/edit" target="_blank" class="lang-pill">🇫🇷 Français</a>
+        <a href="https://docs.google.com/document/d/160jPI0Wmlh4jnQz1s-9eoRduKutVpa6EEIlhRaksb6E/edit" target="_blank" class="lang-pill">🇩🇪 Deutsch</a>
+        <a href="https://docs.google.com/document/d/1GsU-tmiPpq5GLG87Vf8ZHVwyqsDR8nvBE-Xs8X7UbJQ/edit" target="_blank" class="lang-pill">🇳🇱 Nederlands</a>
+        <a href="https://docs.google.com/document/d/10aHWBkh5jOv2yZ8StFmkvMohxQSLDkjXAAAvub6Sn7A/edit" target="_blank" class="lang-pill">🇮🇹 Italiano</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SOCIAL ════ -->
+<section class="social-strip">
+  <div style="position:relative;z-index:2">
+    <h2 class="ss-title">Show Us Your Sligo! 📸</h2>
+    <p class="ss-sub">Tag us in your best shots — sunsets, summits, sandy toes — we repost everything!</p>
+    <div class="ss-btns">
+      <a href="https://www.instagram.com/thesligoretreat/" target="_blank" class="ss-btn">📸 Instagram</a>
+      <a href="https://www.tiktok.com/@thesligoretreat" target="_blank" class="ss-btn">🎵 TikTok</a>
+    </div>
+    <p class="ss-handle">@thesligoretreat</p>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer id="footer">
+  <div style="height:3px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--purple),var(--pink),var(--coral));background-size:200% 100%;animation:rainbowShift 3s linear infinite"></div>
+
+  <!-- ADDRESS BLOCK -->
+  <div class="foot-address">
+    <span class="foot-logo-big">The Sligo Retreat 🏡</span>
+    <div class="foot-addr-line">92 Caltragh Heights</div>
+    <div class="foot-addr-line">Sligo, County Sligo</div>
+    <div class="foot-addr-line">Ireland 🇮🇪</div>
+    <div class="foot-phones">
+      <a href="tel:+353851513135" class="foot-phone">📱 +353 085 151 3135</a>
+      <a href="tel:+34653950310" class="foot-phone">☎️ +34 653 950 310</a>
+    </div>
+    <a href="https://es.airbnb.com/rooms/898503441842034665" target="_blank" class="foot-airbnb">
+      <span class="airbnb-heart">❤️</span>
+      <div class="airbnb-text">
+        <span class="airbnb-small">Find us on</span>
+        <span class="airbnb-big">Airbnb</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- SPONSORS -->
+  <div class="sponsors-wrap">
+    <p class="sp-title">✨ Our Proud Local Partners & Sponsors ✨</p>
+    <div class="sp-grid">
+      <div class="sp-card">
+        <span class="sp-emoji">🌊</span>
+        <div class="sp-name">Wild Atlantic Way</div>
+        <div class="sp-tag">Ireland's epic coastal route</div>
+      </div>
+      <div class="sp-card">
+        <span class="sp-emoji">🏄</span>
+        <div class="sp-name">Strandhill Surf Co.</div>
+        <div class="sp-tag">Surf lessons & board hire</div>
+      </div>
+      <div class="sp-card">
+        <span class="sp-emoji">☘️</span>
+        <div class="sp-name">Fáilte Ireland</div>
+        <div class="sp-tag">National tourism authority</div>
+      </div>
+      <div class="sp-card">
+        <span class="sp-emoji">🍺</span>
+        <div class="sp-name">The Sligo Tap Room</div>
+        <div class="sp-tag">Local craft beers & good craic</div>
+      </div>
+      <div class="sp-card">
+        <span class="sp-emoji">🥾</span>
+        <div class="sp-name">Benbulben Adventures</div>
+        <div class="sp-tag">Guided hikes & outdoor gear</div>
+      </div>
+      <div class="sp-card">
+        <span class="sp-emoji">🍀</span>
+        <div class="sp-name">Yeats Country Eats</div>
+        <div class="sp-tag">Best food in the west of Ireland</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="foot-bottom">
+    <span style="font-family:'Pacifico',cursive;font-size:.9rem;background:linear-gradient(135deg,var(--sun),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">The Sligo Retreat</span>
+    <div class="fb-links">
+      <a href="#house">The House</a>
+      <a href="#explore">Explore</a>
+      <a href="#access">Getting In</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="fb-copy">© 2026 Julio Cantón García · All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+/* MOB MENU */
+document.getElementById('ham').onclick=()=>document.getElementById('mob-menu').classList.add('open');
+document.getElementById('mob-close').onclick=closeMob;
+function closeMob(){document.getElementById('mob-menu').classList.remove('open')}
+
+/* FLOATING EMOJIS */
+const emojis=['🌊','🏄','☘️','⛰️','🌈','🍀','🏡','🎉','⭐','🌸','🦋','🎈','🌺','🏖️','🌻'];
+const fc=document.getElementById('floaties');
+function spawnEmoji(){
+  const el=document.createElement('div');
+  el.className='floaty';
+  el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  const dur=8+Math.random()*12;
+  el.style.cssText=`left:${Math.random()*100}%;font-size:${1.2+Math.random()*2}rem;animation-duration:${dur}s;animation-delay:${Math.random()*dur}s`;
+  fc.appendChild(el);
+  setTimeout(()=>el.remove(),(dur+5)*1000);
+}
+for(let i=0;i<18;i++)spawnEmoji();
+setInterval(spawnEmoji,3000);
+
+/* REVEAL */
+const revEls=document.querySelectorAll('.reveal,.reveal-pop');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in')}})
+},{threshold:.1,rootMargin:'0px 0px -30px 0px'}).observe=function(){};
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in')}})
+},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+revEls.forEach(el=>io.observe(el));
+
+/* COPY WIFI */
+function copyWifi(pwd,id){
+  navigator.clipboard.writeText(pwd).then(()=>{
+    const el=document.getElementById(id);
+    if(el){el.textContent=' ✅ Copied!';setTimeout(()=>el.textContent='',2500)}
+  }).catch(()=>{
+    const el=document.getElementById(id);
+    if(el){el.textContent=' 📋 ';setTimeout(()=>el.textContent='',1500)}
+  });
+}
+
+/* SMOOTH SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
+  });
+});
+</script>
+</body>
+</html>
