@@ -3,758 +3,599 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Sligo Retreat 🌊 Your Sligo Home!</title>
-<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+<title>The Sligo Retreat — 92 Caltragh Heights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --sun:#FFB800;--sky:#00BFFF;--grass:#3CB371;--coral:#FF6B6B;
-  --purple:#9B59B6;--mint:#1ABC9C;--pink:#FF69B4;--navy:#1A1A2E;
-  --white:#FFFFFF;--cream:#FFFDF0;--dark:#2C2C2C;
+  --sun:#FFB627;--sun-d:#F2A007;--coral:#FF6B5B;--sea:#1AA6B7;--sea-d:#0E7C8C;
+  --leaf:#3CAA6E;--cream:#FFFBF2;--paper:#FFF6E4;--ink:#222018;--mist:#7A7264;
+  --rule:rgba(34,32,24,.1);--white:#FFFFFF;
 }
-html{scroll-behavior:smooth}
-body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-thumb{background:linear-gradient(var(--coral),var(--purple));border-radius:3px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--sun);border-radius:4px}
 
-/* ══ ANIMATED BG BLOBS ══ */
-.blob-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
-.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.12;animation:blobFloat ease-in-out infinite alternate}
-@keyframes blobFloat{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,30px) scale(1.1)}}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.4rem 5vw;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s,padding .4s}
+#nav.scrolled{background:rgba(255,251,242,.95);backdrop-filter:blur(14px);box-shadow:0 2px 24px rgba(0,0,0,.06);padding:.9rem 5vw}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;font-style:italic;color:var(--white);transition:color .4s}
+#nav.scrolled .nav-logo{color:var(--coral)}
+.nav-links{display:flex;gap:.2rem;list-style:none}
+.nav-links a{font-size:.72rem;font-weight:600;letter-spacing:.02em;color:rgba(255,255,255,.85);padding:.5rem .9rem;border-radius:30px;transition:all .25s}
+#nav.scrolled .nav-links a{color:var(--ink)}
+.nav-links a:hover{background:var(--sun);color:var(--ink)!important}
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem}
+.nav-ham span{display:block;width:22px;height:2.5px;border-radius:2px;background:var(--white);transition:background .3s}
+#nav.scrolled .nav-ham span{background:var(--ink)}
+.mob-overlay{display:none;position:fixed;inset:0;z-index:490;background:var(--coral);flex-direction:column;align-items:center;justify-content:center}
+.mob-overlay.open{display:flex}
+.mob-overlay a{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;font-style:italic;color:var(--white);padding:1rem 3rem;width:100%;text-align:center;transition:color .3s}
+.mob-overlay a:hover{color:var(--sun)}
+.mob-close{position:absolute;top:1.8rem;right:5vw;background:none;border:none;color:rgba(255,255,255,.6);font-size:1.6rem;cursor:pointer}
 
-/* ══ NAV ══ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:999;
-  background:rgba(255,253,240,.92);backdrop-filter:blur(14px);
-  border-bottom:3px solid transparent;
-  border-image:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--purple)) 1;
-  transition:box-shadow .3s;
-}
-nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.1)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:1rem 5vw;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:'Pacifico',cursive;font-size:1.4rem;background:linear-gradient(135deg,var(--coral),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-links{display:flex;gap:.3rem;list-style:none}
-.nav-links a{
-  font-size:.7rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  color:var(--dark);padding:.45rem .9rem;border-radius:50px;
-  transition:all .25s;
-}
-.nav-links a:hover{background:var(--sun);color:var(--dark);transform:scale(1.05) rotate(-1deg)}
-.nav-ham{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:.4rem}
-.nav-ham span{display:block;width:22px;height:2.5px;background:var(--dark);border-radius:2px;transition:.3s}
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;overflow:hidden;padding:8rem 5vw 4rem}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(165deg,#FFD166 0%,#FF9F6B 28%,#FF6B5B 55%,#3A8FA8 82%,#1AA6B7 100%)}
+.hero-sun{position:absolute;border-radius:50%;background:radial-gradient(circle,#FFF4D6 0%,#FFD166 55%,transparent 100%);filter:blur(2px)}
+.hero-wave{position:absolute;bottom:0;left:0;width:100%;z-index:1}
+.cloud{position:absolute;background:rgba(255,255,255,.55);border-radius:100px;filter:blur(1px)}
+.bird{position:absolute;font-size:1.1rem;opacity:.7;animation:birdFly linear infinite}
+@keyframes birdFly{0%{transform:translateX(-10vw)}100%{transform:translateX(110vw)}}
+.hero-content{position:relative;z-index:5}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.92);color:var(--coral);font-weight:700;font-size:.72rem;letter-spacing:.05em;padding:.5rem 1.2rem;border-radius:40px;margin-bottom:1.6rem;box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.hero-h1{font-family:'Fraunces',serif;font-size:clamp(3rem,9vw,7.5rem);font-weight:600;line-height:.95;color:var(--white);text-shadow:0 4px 30px rgba(0,0,0,.12)}
+.hero-h1 em{font-style:italic;font-weight:500;display:block;color:#FFF4D6}
+.hero-addr{margin-top:1.6rem;font-size:.95rem;font-weight:600;letter-spacing:.03em;color:rgba(255,255,255,.92)}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.4rem}
+.btn-primary{font-size:.78rem;font-weight:700;letter-spacing:.02em;background:var(--ink);color:var(--white);padding:1rem 2.1rem;border:none;border-radius:50px;cursor:pointer;transition:transform .2s,box-shadow .2s;display:inline-block}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.2)}
+.btn-outline{font-size:.78rem;font-weight:700;letter-spacing:.02em;background:rgba(255,255,255,.18);color:var(--white);padding:1rem 2.1rem;border:2px solid rgba(255,255,255,.6);border-radius:50px;cursor:pointer;transition:all .25s;display:inline-block}
+.btn-outline:hover{background:var(--white);color:var(--coral)}
+.hero-scroll{position:relative;z-index:5;margin-top:3rem;font-size:1.4rem;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 
-/* mob menu */
-.mob-menu{display:none;position:fixed;inset:0;z-index:998;background:var(--navy);flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
-.mob-menu.open{display:flex}
-.mob-menu a{font-family:'Pacifico',cursive;font-size:2rem;color:var(--white);padding:1rem;transition:color .3s}
-.mob-menu a:hover{color:var(--sun)}
-.mob-close{position:absolute;top:1.5rem;right:5vw;background:none;border:none;color:rgba(255,255,255,.5);font-size:2rem;cursor:pointer}
+/* INTRO STRIP */
+.intro-strip{background:var(--sea-d);padding:2.6rem 5vw;display:flex;align-items:center;justify-content:center;gap:2.4rem;flex-wrap:wrap}
+.is-item{display:flex;flex-direction:column;align-items:center;gap:.3rem;text-align:center}
+.is-num{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:600;color:var(--sun);line-height:1}
+.is-label{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.is-sep{width:1px;height:34px;background:rgba(255,255,255,.18)}
 
-/* ══ HERO ══ */
-.hero{
-  min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:120px 5vw 5vh;text-align:center;position:relative;overflow:hidden;
-}
-.hero-bg-gradient{
-  position:absolute;inset:0;z-index:0;
-  background:linear-gradient(160deg,#FFF9E6 0%,#E8F8FF 35%,#E8FFF4 65%,#FFF0F0 100%);
-}
-/* floating emojis */
-.floaty{position:absolute;font-size:2rem;animation:floatUp linear infinite;opacity:.6;z-index:1;pointer-events:none}
-@keyframes floatUp{0%{transform:translateY(110vh) rotate(0deg);opacity:0}10%{opacity:.6}90%{opacity:.4}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+/* SECTION BASE */
+.section{padding:6rem 5vw}
+.container{max-width:1160px;margin:0 auto}
+.s-cream{background:var(--cream)}
+.s-paper{background:var(--paper)}
+.s-sea{background:var(--sea);color:var(--white)}
+.s-coral{background:var(--coral);color:var(--white)}
+.sec-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--sun);color:var(--ink);padding:.4rem 1rem;border-radius:30px;margin-bottom:1.2rem}
+.s-sea .sec-eyebrow,.s-coral .sec-eyebrow{background:rgba(255,255,255,.95)}
+.sec-h2{font-family:'Fraunces',serif;font-size:clamp(2.1rem,4.6vw,3.7rem);font-weight:600;line-height:1.02;margin-bottom:1.4rem}
+.sec-h2 em{font-style:italic;font-weight:500;color:var(--coral)}
+.s-sea .sec-h2 em,.s-coral .sec-h2 em{color:var(--sun)}
+.sec-body{font-size:1rem;line-height:1.85;color:var(--mist);max-width:540px}
+.s-sea .sec-body,.s-coral .sec-body{color:rgba(255,255,255,.85)}
 
-.hero-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:linear-gradient(135deg,var(--sun),var(--coral));
-  color:var(--white);font-weight:900;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
-  padding:.5rem 1.2rem;border-radius:50px;margin-bottom:1.5rem;
-  position:relative;z-index:5;
-  box-shadow:0 4px 20px rgba(255,107,107,.35);
-  animation:badgePop .6s cubic-bezier(.34,1.56,.64,1) 0.5s both;
-}
-@keyframes badgePop{from{transform:scale(0) rotate(-5deg)}to{transform:scale(1) rotate(0)}}
-.hero-badge::before{content:'🏠';margin-right:.3rem;font-size:1rem}
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:center}
 
-.hero-title{
-  font-family:'Righteous',sans-serif;
-  font-size:clamp(3rem,10vw,8rem);
-  line-height:.95;
-  position:relative;z-index:5;
-  margin-bottom:.5rem;
-}
-.hero-title .line1{
-  display:block;
-  background:linear-gradient(135deg,var(--coral) 0%,var(--purple) 50%,var(--sky) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero-title .line2{
-  display:block;
-  background:linear-gradient(135deg,var(--sun) 0%,var(--grass) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero-sub{
-  font-size:clamp(1rem,2.5vw,1.3rem);font-weight:700;
-  color:var(--dark);opacity:.7;position:relative;z-index:5;
-  margin-bottom:.5rem;
-}
-.hero-addr{
-  font-size:.8rem;font-weight:600;color:var(--dark);opacity:.5;
-  position:relative;z-index:5;margin-bottom:2.5rem;letter-spacing:.05em;
-}
-.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:5}
-.btn{
-  font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:900;
-  padding:.9rem 2rem;border-radius:50px;border:none;cursor:pointer;
-  transition:transform .2s,box-shadow .2s;display:inline-block;
-  text-transform:uppercase;letter-spacing:.05em;
-}
-.btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 10px 30px rgba(0,0,0,.15)}
-.btn:active{transform:translateY(0) scale(.98)}
-.btn-main{background:linear-gradient(135deg,var(--coral),var(--purple));color:#fff;box-shadow:0 6px 20px rgba(155,89,182,.35)}
-.btn-sec{background:linear-gradient(135deg,var(--sun),var(--grass));color:#fff;box-shadow:0 6px 20px rgba(60,179,113,.3)}
-.btn-ghost{background:transparent;border:3px solid var(--dark);color:var(--dark)}
-.btn-ghost:hover{background:var(--dark);color:var(--white)}
+/* SCENE */
+.scene-frame{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:28px;box-shadow:0 24px 60px rgba(0,0,0,.15)}
+.scene-frame svg{width:100%;height:100%;display:block}
 
-/* hero bounce arrow */
-.bounce-arrow{position:relative;z-index:5;margin-top:3rem;font-size:1.5rem;animation:bounce 1.5s ease-in-out infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+/* WIFI */
+.wifi-pair{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.6rem}
+.wifi-card{background:var(--white);border-radius:22px;padding:2.1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);border:2px solid transparent;transition:border-color .3s,transform .25s}
+.wifi-card:hover{border-color:var(--sun);transform:translateY(-3px)}
+.wc-label{font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sea-d);display:block;margin-bottom:.5rem}
+.wc-name{font-family:'Fraunces',serif;font-size:1.45rem;font-weight:600;color:var(--ink);margin-bottom:1rem}
+.wc-pass-row{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap}
+.wc-pass{font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.06em;color:var(--coral);background:#FFEFE9;border-radius:10px;padding:.5rem .9rem}
+.wc-copy{font-size:.65rem;font-weight:700;color:var(--white);background:var(--sea);border:none;border-radius:30px;padding:.5rem 1.1rem;cursor:pointer;transition:transform .2s}
+.wc-copy:hover{transform:scale(1.05)}
 
-/* ══ WIGGLY DIVIDER ══ */
-.wiggle{display:block;width:100%;overflow:hidden;line-height:0}
-.wiggle svg{display:block}
+/* INFO CARDS */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+.info-card{background:var(--white);border-radius:24px;padding:2.1rem;box-shadow:0 8px 26px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s}
+.info-card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.1)}
+.ic-glyph{font-size:1.9rem;margin-bottom:1rem;display:block}
+.ic-title{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:.6rem}
+.ic-body{font-size:.86rem;line-height:1.78;color:var(--mist)}
+.ic-note{margin-top:.9rem;padding:.6rem .9rem;background:var(--paper);border-radius:10px;font-size:.74rem;font-weight:600;color:var(--ink);line-height:1.5}
 
-/* ══ SECTION ══ */
-.section{padding:5rem 5vw}
-.container{max-width:1100px;margin:0 auto}
+/* VIDEO BOX */
+.video-box{margin-top:2.4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;background:var(--ink);border-radius:24px;padding:2.1rem 2.4rem}
+.vb-left strong{font-family:'Fraunces',serif;font-size:1.25rem;font-weight:600;color:var(--white);display:block;margin-bottom:.3rem}
+.vb-left p{font-size:.85rem;color:rgba(255,255,255,.6)}
 
-/* section colours */
-.s-yellow{background:linear-gradient(135deg,#FFFDE7,#FFF8D6)}
-.s-blue{background:linear-gradient(135deg,#E3F6FF,#D0EEFF)}
-.s-green{background:linear-gradient(135deg,#E8FFF4,#D4F5E5)}
-.s-pink{background:linear-gradient(135deg,#FFF0F5,#FFE4EE)}
-.s-purple{background:linear-gradient(135deg,#F3E8FF,#EBD8FF)}
-.s-dark{background:var(--navy);color:var(--white)}
+/* EXPLORE */
+.explore-cat{margin-bottom:2.6rem}
+.explore-cat-heading{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;font-style:italic;color:var(--white);display:flex;align-items:center;gap:.8rem;margin-bottom:1.1rem}
+.explore-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.exp-card{background:rgba(255,255,255,.12);border-radius:18px;padding:1.6rem 1.5rem;transition:background .3s,transform .25s}
+.exp-card:hover{background:rgba(255,255,255,.2);transform:translateY(-3px)}
+.exp-type{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sun);margin-bottom:.5rem}
+.exp-name{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:.5rem;line-height:1.2}
+.exp-desc{font-size:.82rem;line-height:1.65;color:rgba(255,255,255,.7)}
 
-.sec-tag{
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;
-  background:var(--sun);color:var(--dark);
-  padding:.35rem 1rem;border-radius:50px;margin-bottom:1.2rem;
-}
-.sec-h2{
-  font-family:'Righteous',sans-serif;
-  font-size:clamp(2rem,5vw,3.5rem);line-height:1;
-  margin-bottom:1.2rem;
-}
-.sec-body{font-size:1rem;line-height:1.8;color:#555;max-width:550px}
-.s-dark .sec-body{color:rgba(255,255,255,.65)}
+/* STEPS */
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-top:2.8rem}
+.step{background:var(--white);border-radius:22px;padding:2rem 1.7rem;box-shadow:0 6px 22px rgba(0,0,0,.05);transition:transform .25s}
+.step:hover{transform:translateY(-5px)}
+.step-n{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;font-style:italic;color:var(--sun);line-height:1;margin-bottom:.8rem;display:block}
+.step-title{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:.6rem}
+.step-desc{font-size:.84rem;line-height:1.7;color:var(--mist)}
 
-/* ══ FUN CARDS ══ */
-.fun-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;margin-top:2.5rem}
-.fun-card{
-  background:var(--white);border-radius:20px;padding:2rem 1.8rem;
-  box-shadow:0 4px 20px rgba(0,0,0,.07);
-  border:3px solid transparent;
-  transition:transform .25s,box-shadow .25s,border-color .25s;
-  position:relative;overflow:hidden;
-}
-.fun-card::before{
-  content:'';position:absolute;inset:0;border-radius:18px;
-  background:linear-gradient(135deg,var(--card-a),var(--card-b));
-  opacity:0;transition:opacity .3s;
-}
-.fun-card:hover{transform:translateY(-6px) rotate(.5deg);box-shadow:0 16px 40px rgba(0,0,0,.12)}
-.fun-card:hover::before{opacity:.06}
-.fun-card:hover{border-color:var(--card-a)}
-.card-emoji{font-size:2.5rem;margin-bottom:.8rem;display:block;animation:wiggle 2s ease-in-out infinite}
-@keyframes wiggle{0%,100%{transform:rotate(0)}15%{transform:rotate(-8deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-4deg)}60%{transform:rotate(4deg)}}
-.fun-card:nth-child(2) .card-emoji{animation-delay:.3s}
-.fun-card:nth-child(3) .card-emoji{animation-delay:.6s}
-.fun-card:nth-child(4) .card-emoji{animation-delay:.9s}
-.fun-card:nth-child(5) .card-emoji{animation-delay:1.2s}
-.fun-card:nth-child(6) .card-emoji{animation-delay:1.5s}
-.card-title{font-family:'Righteous',sans-serif;font-size:1.15rem;margin-bottom:.6rem;color:var(--dark)}
-.card-body{font-size:.88rem;line-height:1.75;color:#666}
-.card-tip{
-  margin-top:1rem;padding:.6rem .9rem;border-radius:10px;
-  background:var(--cream);font-size:.78rem;font-weight:700;color:var(--dark);
-  border-left:3px solid var(--sun);
-}
+/* RULES */
+.rule-list{margin-top:2.6rem;display:flex;flex-direction:column;gap:.8rem}
+.rule{display:flex;gap:1rem;align-items:flex-start;background:var(--white);border-radius:16px;padding:1.1rem 1.3rem;box-shadow:0 4px 16px rgba(0,0,0,.04);transition:transform .2s}
+.rule:hover{transform:translateX(4px)}
+.rule-emoji{font-size:1.3rem;flex-shrink:0}
+.rule-title{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:.2rem}
+.rule-desc{font-size:.83rem;line-height:1.65;color:var(--mist)}
 
-/* ══ WIFI CARDS ══ */
-.wifi-duo{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
-.wifi-card{
-  background:var(--white);border-radius:20px;padding:2rem;
-  box-shadow:0 4px 20px rgba(0,0,0,.08);
-  border:3px solid var(--sky);
-  position:relative;overflow:hidden;text-align:center;
-}
-.wifi-card::after{
-  content:'📶';position:absolute;top:-10px;right:-5px;
-  font-size:5rem;opacity:.08;
-}
-.wifi-lbl{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:.4rem}
-.wifi-name{font-family:'Righteous',sans-serif;font-size:1.2rem;color:var(--dark);margin-bottom:1rem}
-.wifi-pass{
-  font-family:'Courier New',monospace;font-size:1.1rem;font-weight:700;
-  background:#F0F8FF;border:2px dashed var(--sky);
-  padding:.5rem 1rem;border-radius:10px;color:var(--dark);
-  display:block;margin-bottom:.8rem;letter-spacing:.08em;
-}
-.copy-btn{
-  font-size:.65rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  background:linear-gradient(135deg,var(--sky),var(--mint));color:#fff;
-  border:none;border-radius:50px;padding:.4rem 1.1rem;cursor:pointer;
-  transition:transform .2s;
-}
-.copy-btn:hover{transform:scale(1.07)}
+/* RESTAURANTS */
+.rest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem;margin-top:2.8rem}
+.rest-card{background:var(--white);border-radius:22px;padding:1.9rem;box-shadow:0 8px 26px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s}
+.rest-card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.1)}
+.rest-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem;gap:.7rem}
+.rest-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;color:var(--ink);line-height:1.2}
+.rest-stars{font-size:.78rem;color:var(--sun-d);white-space:nowrap}
+.rest-loc{font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--sea-d);margin-bottom:.7rem}
+.rest-desc{font-size:.83rem;line-height:1.75;color:var(--mist)}
+.rest-tag{display:inline-block;margin-top:.8rem;font-size:.7rem;font-weight:700;color:var(--coral);background:#FFEFE9;padding:.3rem .8rem;border-radius:30px}
 
-/* ══ EXPLORE GRID ══ */
-.exp-cat{margin-bottom:2.5rem}
-.exp-cat-title{
-  font-family:'Pacifico',cursive;font-size:1.3rem;
-  margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;
-}
-.exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem}
-.exp-card{
-  background:rgba(255,255,255,.7);border-radius:16px;padding:1.4rem 1.2rem;
-  border:2px solid rgba(255,255,255,.9);
-  transition:transform .2s,box-shadow .2s;
-  backdrop-filter:blur(6px);
-}
-.exp-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
-.exp-type{font-size:.55rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.4rem}
-.exp-name{font-family:'Righteous',sans-serif;font-size:.95rem;color:var(--dark);margin-bottom:.4rem;line-height:1.2}
-.exp-desc{font-size:.8rem;line-height:1.6;color:#555}
+/* SHOPS */
+.shop-table{margin-top:2.8rem;display:flex;flex-direction:column;gap:.8rem}
+.shop-row{display:grid;grid-template-columns:1.3fr 1fr 1.7fr;gap:1rem;background:rgba(255,255,255,.1);border-radius:18px;padding:1.2rem 1.5rem;align-items:center;transition:background .3s}
+.shop-row:hover{background:rgba(255,255,255,.18)}
+.shop-row.head{background:transparent;padding:0 1.5rem}
+.shop-row.head .shop-cell{font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sun)}
+.shop-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:var(--white)}
+.shop-loc{color:rgba(255,255,255,.6);font-size:.85rem}
+.shop-best{color:rgba(255,255,255,.85);line-height:1.6;font-size:.85rem}
+.shop-best strong{color:var(--sun)}
 
-/* ══ STEPS ══ */
-.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
-.step-card{
-  background:var(--white);border-radius:20px;padding:2rem 1.5rem;text-align:center;
-  box-shadow:0 4px 20px rgba(0,0,0,.07);
-  transition:transform .2s;
-}
-.step-card:hover{transform:translateY(-5px) rotate(-1deg)}
-.step-num{
-  font-family:'Pacifico',cursive;font-size:3rem;
-  background:linear-gradient(135deg,var(--coral),var(--purple));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  display:block;line-height:1;margin-bottom:.7rem;
-}
-.step-title{font-family:'Righteous',sans-serif;font-size:.95rem;color:var(--dark);margin-bottom:.5rem}
-.step-desc{font-size:.82rem;line-height:1.65;color:#666}
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-top:2.8rem}
+.c-card{background:var(--white);border-radius:22px;padding:2.1rem;text-align:center;box-shadow:0 8px 26px rgba(0,0,0,.05);transition:transform .25s}
+.c-card:hover{transform:translateY(-4px)}
+.c-glyph{font-size:1.7rem;margin-bottom:.7rem;display:block}
+.c-lbl{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sea-d);display:block;margin-bottom:.5rem}
+.c-val{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:var(--ink);transition:color .3s}
+.c-val:hover{color:var(--coral)}
+.lang-pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.lang-pill{font-size:.72rem;font-weight:700;border-radius:30px;padding:.5rem 1.1rem;background:var(--white);color:var(--ink);transition:transform .2s}
+.lang-pill:hover{transform:scale(1.06);background:var(--sun)}
 
-/* ══ RULES ══ */
-.rule-cards{display:flex;flex-direction:column;gap:.7rem;margin-top:2rem}
-.rule-card{
-  display:flex;align-items:flex-start;gap:1rem;
-  background:var(--white);border-radius:14px;padding:1.2rem 1.4rem;
-  box-shadow:0 2px 12px rgba(0,0,0,.05);
-  transition:transform .2s;
-}
-.rule-card:hover{transform:translateX(6px)}
-.rule-emoji{font-size:1.5rem;flex-shrink:0;margin-top:.1rem}
-.rule-title{font-weight:800;font-size:.9rem;color:var(--dark);margin-bottom:.2rem}
-.rule-desc{font-size:.83rem;line-height:1.6;color:#666}
+/* SOCIAL */
+.social-strip{background:linear-gradient(135deg,var(--coral),var(--sun));padding:5.5rem 5vw;text-align:center;position:relative;overflow:hidden}
+.ss-h2{font-family:'Fraunces',serif;font-size:clamp(1.9rem,4.6vw,3.4rem);font-weight:600;font-style:italic;color:var(--white);margin-bottom:1rem;line-height:1.1}
+.ss-body{font-size:.95rem;color:rgba(255,255,255,.9);max-width:440px;margin:0 auto 2.2rem;line-height:1.8;font-weight:600}
+.ss-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.ss-btn{font-size:.78rem;font-weight:700;background:var(--white);color:var(--coral);padding:.85rem 2rem;border-radius:50px;transition:transform .2s}
+.ss-btn:hover{transform:translateY(-3px) scale(1.04)}
+.ss-handle{margin-top:1.6rem;font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.85)}
 
-/* ══ CONTACT ══ */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2.5rem}
-.contact-card{
-  background:rgba(255,255,255,.15);border-radius:20px;padding:2rem;
-  border:2px solid rgba(255,255,255,.2);
-  transition:background .3s;text-align:center;
-}
-.contact-card:hover{background:rgba(255,255,255,.22)}
-.cc-emoji{font-size:2rem;margin-bottom:.7rem;display:block}
-.cc-lbl{font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.4rem}
-.cc-val{font-family:'Righteous',sans-serif;font-size:1.15rem;color:var(--white);transition:color .3s}
-.cc-val:hover{color:var(--sun)}
-
-/* ══ LANGUAGES ══ */
-.lang-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
-.lang-pill{
-  font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
-  padding:.5rem 1.1rem;border-radius:50px;border:2px solid rgba(255,255,255,.3);
-  color:var(--white);transition:all .25s;
-}
-.lang-pill:hover{background:var(--white);color:var(--navy)}
-
-/* ══ SOCIAL STRIP ══ */
-.social-strip{
-  background:linear-gradient(135deg,var(--pink),var(--coral),var(--sun));
-  padding:5rem 5vw;text-align:center;position:relative;overflow:hidden;
-}
-.social-strip::before{content:'📸';position:absolute;top:-20px;left:5%;font-size:8rem;opacity:.08}
-.social-strip::after{content:'🌊';position:absolute;bottom:-10px;right:5%;font-size:8rem;opacity:.1}
-.ss-title{font-family:'Pacifico',cursive;font-size:clamp(1.8rem,5vw,3rem);color:#fff;margin-bottom:1rem}
-.ss-sub{font-size:1rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:2rem;max-width:460px;margin-left:auto;margin-right:auto}
-.ss-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
-.ss-btn{
-  background:var(--white);font-family:'Nunito',sans-serif;font-weight:900;
-  font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;
-  padding:.8rem 2rem;border-radius:50px;color:var(--coral);
-  transition:transform .2s,box-shadow .2s;
-  box-shadow:0 4px 20px rgba(0,0,0,.15);
-}
-.ss-btn:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 10px 30px rgba(0,0,0,.2)}
-.ss-handle{font-family:'Pacifico',cursive;font-size:1.2rem;color:rgba(255,255,255,.7)}
-
-/* ══ FOOTER ══ */
-#footer{background:var(--navy);padding:0;overflow:hidden;position:relative}
-#footer::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% -20%,rgba(255,184,0,.08) 0%,transparent 60%);
-}
-
-/* address block */
-.foot-address{
-  text-align:center;padding:4rem 5vw 3rem;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  position:relative;z-index:2;
-}
-.foot-logo-big{
-  font-family:'Pacifico',cursive;font-size:clamp(2rem,6vw,3.5rem);
-  background:linear-gradient(135deg,var(--sun),var(--coral),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  display:block;margin-bottom:1.5rem;
-}
-.foot-addr-line{
-  font-size:.85rem;font-weight:600;letter-spacing:.12em;
-  color:rgba(255,255,255,.55);line-height:2;
-}
-.foot-phones{
-  margin-top:1.2rem;display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;
-}
-.foot-phone{
-  font-family:'Righteous',sans-serif;font-size:1rem;
-  color:rgba(255,255,255,.75);transition:color .3s;
-}
+/* FOOTER */
+#footer{background:var(--ink)}
+.foot-address{text-align:center;padding:4.2rem 5vw 3.2rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.foot-wordmark{font-family:'Fraunces',serif;font-size:clamp(1.8rem,6vw,4rem);font-weight:600;font-style:italic;color:var(--sun);display:block;margin-bottom:1.6rem}
+.foot-addr-line{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.6);line-height:2}
+.foot-phones{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.foot-phone{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:rgba(255,255,255,.8);transition:color .3s}
 .foot-phone:hover{color:var(--sun)}
-
-/* airbnb badge */
-.foot-airbnb{
-  display:inline-flex;align-items:center;gap:1rem;
-  background:rgba(255,56,92,.1);border:2px solid rgba(255,56,92,.35);
-  border-radius:16px;padding:1rem 2rem;margin-top:2rem;
-  transition:background .3s,border-color .3s;
-}
-.foot-airbnb:hover{background:rgba(255,56,92,.18);border-color:rgba(255,56,92,.7)}
-.airbnb-heart{font-size:1.6rem}
-.airbnb-text{text-align:left}
-.airbnb-small{font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block}
-.airbnb-big{font-family:'Righteous',sans-serif;font-size:1.4rem;color:#FF385C}
-
-/* sponsors */
-.sponsors-wrap{
-  padding:3rem 5vw;border-bottom:1px solid rgba(255,255,255,.08);
-  position:relative;z-index:2;
-}
-.sp-title{
-  font-size:.55rem;font-weight:800;letter-spacing:.45em;text-transform:uppercase;
-  color:rgba(255,255,255,.3);text-align:center;margin-bottom:2.5rem;
-}
-.sp-grid{
-  display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
-  background:rgba(255,255,255,.05);
-  border-radius:16px;overflow:hidden;
-  border:1px solid rgba(255,255,255,.05);
-}
-.sp-card{
-  background:#0D1528;padding:1.6rem 1rem;text-align:center;
-  transition:background .3s;
-  position:relative;overflow:hidden;
-}
-.sp-card:hover{background:#141D35}
-.sp-emoji{font-size:2rem;margin-bottom:.6rem;display:block;animation:wiggle 3s ease-in-out infinite}
-.sp-name{font-size:.68rem;font-weight:800;color:rgba(255,255,255,.65);margin-bottom:.2rem;letter-spacing:.03em}
-.sp-tag{font-size:.55rem;color:rgba(255,255,255,.28);line-height:1.4}
-.sp-card:nth-child(2) .sp-emoji{animation-delay:.5s}
-.sp-card:nth-child(3) .sp-emoji{animation-delay:1s}
-.sp-card:nth-child(4) .sp-emoji{animation-delay:1.5s}
-.sp-card:nth-child(5) .sp-emoji{animation-delay:2s}
-.sp-card:nth-child(6) .sp-emoji{animation-delay:2.5s}
-
-/* bottom bar */
-.foot-bottom{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.5rem 5vw;flex-wrap:wrap;gap:1rem;
-  position:relative;z-index:2;
-}
-.fb-links{display:flex;gap:1.2rem;flex-wrap:wrap}
-.fb-links a{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);transition:color .3s}
+.foot-airbnb{display:inline-flex;align-items:center;gap:.9rem;background:rgba(255,56,92,.12);border-radius:18px;padding:.9rem 1.9rem;margin-top:2.2rem;transition:background .3s}
+.foot-airbnb:hover{background:rgba(255,56,92,.22)}
+.airbnb-icon{font-size:1.4rem}
+.airbnb-pre{font-size:.55rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block}
+.airbnb-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;color:#FF385C}
+.sponsors-wrap{padding:3rem 5vw;border-bottom:1px solid rgba(255,255,255,.08)}
+.sp-label{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:center;margin-bottom:2.2rem}
+.sp-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.9rem}
+.sp-card{background:rgba(255,255,255,.05);border-radius:16px;padding:1.7rem 1rem;text-align:center;transition:background .3s,transform .25s}
+.sp-card:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+.sp-glyph{font-size:1.6rem;margin-bottom:.6rem;display:block}
+.sp-name{font-family:'Fraunces',serif;font-size:.92rem;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:.2rem}
+.sp-tag{font-size:.62rem;color:rgba(255,255,255,.4);line-height:1.5}
+.foot-bottom{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 5vw;flex-wrap:wrap;gap:1rem}
+.fb-logo{font-family:'Fraunces',serif;font-size:.95rem;font-weight:700;font-style:italic;color:var(--sun)}
+.fb-links{display:flex;gap:1.3rem;flex-wrap:wrap}
+.fb-links a{font-size:.65rem;font-weight:600;color:rgba(255,255,255,.4);transition:color .3s}
 .fb-links a:hover{color:var(--sun)}
-.fb-copy{font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.05em}
+.fb-copy{font-size:.6rem;color:rgba(255,255,255,.25)}
 
-/* ══ REVEAL ══ */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
-.reveal.in{opacity:1;transform:none}
-.reveal-pop{opacity:0;transform:scale(.92);transition:opacity .6s ease,transform .6s cubic-bezier(.34,1.56,.64,1)}
-.reveal-pop.in{opacity:1;transform:scale(1)}
-[data-d="1"]{transition-delay:.08s}[data-d="2"]{transition-delay:.16s}
-[data-d="3"]{transition-delay:.24s}[data-d="4"]{transition-delay:.32s}
-[data-d="5"]{transition-delay:.4s}[data-d="6"]{transition-delay:.48s}
+/* REVEAL */
+.r{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.r.in{opacity:1;transform:none}
+.r-l{opacity:0;transform:translateX(-28px);transition:opacity .7s ease,transform .7s ease}
+.r-l.in{opacity:1;transform:none}
+.r-r{opacity:0;transform:translateX(28px);transition:opacity .7s ease,transform .7s ease}
+.r-r.in{opacity:1;transform:none}
+[data-d="1"]{transition-delay:.07s}[data-d="2"]{transition-delay:.14s}[data-d="3"]{transition-delay:.21s}
+[data-d="4"]{transition-delay:.28s}[data-d="5"]{transition-delay:.35s}[data-d="6"]{transition-delay:.42s}
 
-/* ══ RAINBOW HEADING ══ */
-.rainbow{
-  background:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--purple),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  background-size:200% 100%;animation:rainbowShift 4s linear infinite;
-}
-@keyframes rainbowShift{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-
-/* ══ RESPONSIVE ══ */
-@media(max-width:768px){
+/* RESPONSIVE */
+@media(max-width:900px){
   .nav-links{display:none}.nav-ham{display:flex}
-  .wifi-duo{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr;gap:3rem}
+  .info-grid{grid-template-columns:1fr 1fr}
   .steps-row{grid-template-columns:1fr 1fr}
   .contact-grid{grid-template-columns:1fr}
+  .wifi-pair{grid-template-columns:1fr}
   .sp-grid{grid-template-columns:repeat(3,1fr)}
+  .rest-grid{grid-template-columns:1fr}
+  .shop-row{grid-template-columns:1fr;gap:.3rem;text-align:left}
+  .shop-row.head{display:none}
   .foot-bottom{flex-direction:column;text-align:center;align-items:center}
   .fb-links{justify-content:center}
-  .foot-phones{flex-direction:column;align-items:center;gap:.5rem}
+  .foot-phones{flex-direction:column;align-items:center;gap:.6rem}
+  .intro-strip{gap:1.2rem}.is-sep{display:none}
 }
-@media(max-width:480px){
+@media(max-width:540px){
+  .info-grid{grid-template-columns:1fr}
   .steps-row{grid-template-columns:1fr}
   .sp-grid{grid-template-columns:repeat(2,1fr)}
-  .fun-grid{grid-template-columns:1fr}
-  .exp-grid{grid-template-columns:1fr}
+  .explore-grid{grid-template-columns:1fr}
+  .section{padding:4rem 5vw}
 }
 </style>
 </head>
 <body>
 
-<!-- BACKGROUND BLOBS -->
-<div class="blob-bg">
-  <div class="blob" style="width:500px;height:500px;top:-100px;left:-150px;background:var(--sun);animation-duration:8s"></div>
-  <div class="blob" style="width:400px;height:400px;top:30%;right:-100px;background:var(--coral);animation-duration:10s;animation-delay:2s"></div>
-  <div class="blob" style="width:350px;height:350px;bottom:20%;left:-80px;background:var(--sky);animation-duration:7s;animation-delay:1s"></div>
-</div>
-
-<!-- NAV -->
 <nav id="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">The Sligo Retreat 🏡</a>
-    <ul class="nav-links">
-      <li><a href="#house">🏠 The House</a></li>
-      <li><a href="#explore">🗺️ Explore</a></li>
-      <li><a href="#access">🔑 Getting In</a></li>
-      <li><a href="#memory">📸 Memories</a></li>
-      <li><a href="#contact">📞 Contact</a></li>
-    </ul>
-    <button class="nav-ham" id="ham"><span></span><span></span><span></span></button>
-  </div>
+  <a href="#" class="nav-logo">The Sligo Retreat</a>
+  <ul class="nav-links">
+    <li><a href="#house">The House</a></li>
+    <li><a href="#access">Getting In</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#dine">Dining</a></li>
+    <li><a href="#shop">Shopping</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-ham" id="ham"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- MOB MENU -->
-<div class="mob-menu" id="mob-menu">
+<div class="mob-overlay" id="mob">
   <button class="mob-close" id="mob-close">✕</button>
-  <a href="#house" onclick="closeMob()">🏠 The House</a>
-  <a href="#explore" onclick="closeMob()">🗺️ Explore</a>
-  <a href="#access" onclick="closeMob()">🔑 Getting In</a>
-  <a href="#memory" onclick="closeMob()">📸 Memories</a>
-  <a href="#contact" onclick="closeMob()">📞 Contact</a>
+  <a href="#house" onclick="closeMob()">The House</a>
+  <a href="#access" onclick="closeMob()">Getting In</a>
+  <a href="#explore" onclick="closeMob()">Explore Sligo</a>
+  <a href="#dine" onclick="closeMob()">Dining</a>
+  <a href="#shop" onclick="closeMob()">Shopping</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
 </div>
 
-<!-- ════ HERO ════ -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg-gradient"></div>
-  <div id="floaties"></div>
-
-  <div class="hero-badge">Your Sligo Adventure Starts Here!</div>
-
-  <h1 class="hero-title">
-    <span class="line1">The Sligo</span>
-    <span class="line2">Retreat 🌊</span>
-  </h1>
-
-  <p class="hero-sub">Welcome to your home away from home! 🎉</p>
-  <p class="hero-addr">92 Caltragh Heights · Sligo · Ireland</p>
-
-  <div class="hero-btns">
-    <a href="#house" class="btn btn-main">🏠 See the House</a>
-    <a href="#explore" class="btn btn-sec">🗺️ Explore Sligo</a>
+  <div class="hero-bg"></div>
+  <div class="hero-sun" style="width:280px;height:280px;top:6%;right:10%"></div>
+  <div class="cloud" style="width:140px;height:46px;top:18%;left:8%"></div>
+  <div class="cloud" style="width:100px;height:36px;top:28%;left:18%"></div>
+  <div class="cloud" style="width:160px;height:50px;top:14%;left:65%"></div>
+  <span class="bird" style="top:22%;animation-duration:18s">🕊️</span>
+  <span class="bird" style="top:30%;animation-duration:24s;animation-delay:6s">🕊️</span>
+  <svg class="hero-wave" viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,120 C240,60 480,160 720,100 C960,40 1200,140 1440,90 L1440,200 L0,200 Z" fill="#FFFBF2"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-badge">☘️ Welcome to Sligo!</div>
+    <h1 class="hero-h1">The Sligo<br><em>Retreat</em></h1>
+    <p class="hero-addr">92 Caltragh Heights · Your Sunny Home in Sligo</p>
+    <div class="hero-actions">
+      <a href="#house" class="btn-primary">The House Guide</a>
+      <a href="#explore" class="btn-outline">Explore Sligo</a>
+    </div>
   </div>
-
-  <div class="bounce-arrow">👇</div>
+  <div class="hero-scroll">👇</div>
 </section>
 
-<!-- WIGGLE DOWN -->
-<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#FFFDF0" d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z"/></svg>
+<div class="intro-strip">
+  <div class="is-item"><span class="is-num">WiFi</span><span class="is-label">Ready to Go</span></div><div class="is-sep"></div>
+  <div class="is-item"><span class="is-num">6</span><span class="is-label">Languages</span></div><div class="is-sep"></div>
+  <div class="is-item"><span class="is-num">15+</span><span class="is-label">Nearby Experiences</span></div><div class="is-sep"></div>
+  <div class="is-item"><span class="is-num">12</span><span class="is-label">Restaurants Listed</span></div>
+</div>
 
-<!-- ════ THE HOUSE ════ -->
-<section class="section s-yellow" id="house">
+<!-- THE HOUSE -->
+<section class="section s-cream" id="house">
   <div class="container">
-    <div class="reveal">
-      <div class="sec-tag">🏡 The House</div>
-      <h2 class="sec-h2 rainbow">Everything You Need!</h2>
-      <p class="sec-body">Here's your complete guide to the house. Don't stress — we've made it super simple. Got questions? Just ring us! 📱</p>
-    </div>
-
-    <!-- WIFI -->
-    <div style="margin-top:2.5rem" class="reveal">
-      <h3 style="font-family:'Righteous',sans-serif;font-size:1.5rem;margin-bottom:.3rem">📶 WiFi — Get Connected!</h3>
-      <p style="font-size:.88rem;color:#666;margin-bottom:0">Two networks, same password. Easy! 🙌</p>
-    </div>
-    <div class="wifi-duo reveal">
-      <div class="wifi-card">
-        <div class="wifi-lbl">📡 Main Floor</div>
-        <div class="wifi-name">eir97665757</div>
-        <div class="wifi-pass" id="wp1">grRKACPmgK</div>
-        <button class="copy-btn" onclick="copyWifi('grRKACPmgK','c1')">Copy Password <span id="c1"></span></button>
+    <div class="two-col">
+      <div class="r-l">
+        <div class="sec-eyebrow">🏡 The Residence</div>
+        <h2 class="sec-h2">Everything you<br>need to know</h2>
+        <p class="sec-body">The house is fully set up and ready for you to enjoy. Here's your complete guide — WiFi, heating, the garden, and everything in between.</p>
       </div>
-      <div class="wifi-card">
-        <div class="wifi-lbl">📡 Upstairs</div>
-        <div class="wifi-name">eir97665757_EXT</div>
-        <div class="wifi-pass" id="wp2">grRKACPmgK</div>
-        <button class="copy-btn" onclick="copyWifi('grRKACPmgK','c2')">Copy Password <span id="c2"></span></button>
-      </div>
-    </div>
-
-    <!-- HOUSE CARDS -->
-    <div class="fun-grid" style="margin-top:1.2rem">
-      <div class="fun-card reveal-pop" data-d="1" style="--card-a:#FFB800;--card-b:#FF6B6B">
-        <span class="card-emoji">🔥</span>
-        <div class="card-title">Heating</div>
-        <div class="card-body">Wall switch near the coats — flick to <strong>CONSTANT</strong> to turn on. The fireplace heats the radiators and hot water too!</div>
-        <div class="card-tip">💡 Turn it off when you head out — cheers!</div>
-      </div>
-      <div class="fun-card reveal-pop" data-d="2" style="--card-a:#00BFFF;--card-b:#1ABC9C">
-        <span class="card-emoji">💡</span>
-        <div class="card-title">Smart Lights</div>
-        <div class="card-body">Shed lights auto on at <strong>21:30</strong>, off at <strong>11:50</strong>. Living room lamp on at <strong>20:30</strong>, off at <strong>23:30</strong>. Just ask <strong>Alexa</strong> too!</div>
-        <div class="card-tip">⚠️ Don't unplug the smart devices please!</div>
-      </div>
-      <div class="fun-card reveal-pop" data-d="3" style="--card-a:#FF69B4;--card-b:#9B59B6">
-        <span class="card-emoji">♨️</span>
-        <div class="card-title">Hot Water</div>
-        <div class="card-body">Powered by the fireplace and solar panels working together. Need help getting it going? Just text us and we'll sort it remotely! 🙏</div>
-      </div>
-      <div class="fun-card reveal-pop" data-d="4" style="--card-a:#3CB371;--card-b:#1ABC9C">
-        <span class="card-emoji">⚽</span>
-        <div class="card-title">Outdoor Fun!</div>
-        <div class="card-body">Mini golf, basketball court AND a football in the back garden! ⛳🏀 All gear is in the outdoor container. Court lights available for evening games — please switch off after!</div>
-        <div class="card-tip">⚽ Go on — have a kickabout!</div>
-      </div>
-      <div class="fun-card reveal-pop" data-d="5" style="--card-a:#FFB800;--card-b:#3CB371">
-        <span class="card-emoji">🪑</span>
-        <div class="card-title">Shed Porch</div>
-        <div class="card-body">Outdoor table and chairs on the porch — perfect for morning coffee ☕ or evening drinks 🍷. Porch light button is beside the back garden door.</div>
-      </div>
-      <div class="fun-card reveal-pop" data-d="6" style="--card-a:#9B59B6;--card-b:#FF69B4">
-        <span class="card-emoji">📖</span>
-        <div class="card-title">Physical Memory Book</div>
-        <div class="card-body">There's also a physical journal on the table — leave a handwritten note before you go! 😊 Future guests LOVE reading them.</div>
-      </div>
-    </div>
-
-    <!-- GUEST MEMORY BOOK PADLET -->
-    <div class="reveal" id="memory" style="margin-top:2rem">
-      <div style="background:linear-gradient(135deg,#FF69B4,#9B59B6,#00BFFF);border-radius:24px;padding:2.5rem;position:relative;overflow:hidden">
-        <!-- sparkle bg -->
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,.12) 0%,transparent 60%);pointer-events:none"></div>
-        <div style="position:relative;z-index:2">
-          <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap">
-            <span style="font-size:2rem">📸</span>
-            <h3 style="font-family:'Righteous',sans-serif;font-size:1.6rem;color:#fff;line-height:1">Guest Memory Book</h3>
-            <span style="background:rgba(255,255,255,.2);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px">Online!</span>
-          </div>
-          <p style="font-size:.95rem;color:rgba(255,255,255,.9);line-height:1.75;max-width:620px;margin-bottom:1.5rem">
-            One of the best parts of hosting is seeing guests discover new places and make memories! We've created a shared online Guest Memory Book where you can leave a photo, a recommendation, or a short message for future guests. 🥰
-          </p>
-
-          <!-- HOW TO USE -->
-          <div style="background:rgba(255,255,255,.15);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;backdrop-filter:blur(6px)">
-            <p style="font-family:'Righteous',sans-serif;color:#fff;font-size:1rem;margin-bottom:1rem">How to use it:</p>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem">
-              <div style="display:flex;align-items:flex-start;gap:.6rem">
-                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">1</span>
-                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Click the link below</span>
-              </div>
-              <div style="display:flex;align-items:flex-start;gap:.6rem">
-                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">2</span>
-                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Select "+" or "Add Post"</span>
-              </div>
-              <div style="display:flex;align-items:flex-start;gap:.6rem">
-                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">3</span>
-                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Upload a photo (optional!)</span>
-              </div>
-              <div style="display:flex;align-items:flex-start;gap:.6rem">
-                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">4</span>
-                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Add a short note or memory</span>
-              </div>
-              <div style="display:flex;align-items:flex-start;gap:.6rem">
-                <span style="background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:.7rem;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">5</span>
-                <span style="font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5">Post it for future guests! 🎉</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- IDEAS -->
-          <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem">
-            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">📸 Favourite photo</span>
-            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">🍽️ Restaurant you loved</span>
-            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">🌅 Best viewpoint</span>
-            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">💡 Tips for future guests</span>
-            <span style="background:rgba(255,255,255,.18);color:#fff;font-size:.75rem;font-weight:700;padding:.4rem .9rem;border-radius:50px">❤️ Memorable moment</span>
-          </div>
-
-          <a href="https://padlet.com/juliocantonjn/guest-memory-book-6eapnjq9mvbpvhic" target="_blank"
-            style="display:inline-flex;align-items:center;gap:.8rem;background:#fff;color:#9B59B6;font-family:'Nunito',sans-serif;font-weight:900;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;padding:1rem 2rem;border-radius:50px;box-shadow:0 6px 25px rgba(0,0,0,.2);transition:transform .2s,box-shadow .2s;text-decoration:none"
-            onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 12px 35px rgba(0,0,0,.25)'"
-            onmouseout="this.style.transform='';this.style.boxShadow='0 6px 25px rgba(0,0,0,.2)'">
-            <span style="font-size:1.2rem">📖</span> View & Add Your Memory!
-          </a>
-          <p style="font-size:.78rem;color:rgba(255,255,255,.65);margin-top:1.2rem;max-width:500px;line-height:1.6">
-            Thank you for being part of our guest community! We hope you'll enjoy reading memories from previous visitors — and perhaps leave one of your own. 🙏
-          </p>
+      <div class="r-r">
+        <div class="scene-frame">
+          <svg viewBox="0 0 480 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFD166"/><stop offset="55%" stop-color="#FF9F6B"/><stop offset="100%" stop-color="#FF6B5B"/></linearGradient>
+              <linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3CAA6E"/><stop offset="100%" stop-color="#1E7A4C"/></linearGradient>
+            </defs>
+            <rect width="480" height="600" fill="url(#sk)"/>
+            <circle cx="370" cy="110" r="55" fill="#FFF4D6" opacity=".9"/>
+            <ellipse cx="120" cy="90" rx="60" ry="20" fill="#fff" opacity=".7"/>
+            <ellipse cx="160" cy="80" rx="40" ry="16" fill="#fff" opacity=".7"/>
+            <path d="M0 360 L40 300 L100 280 L170 274 L340 270 L390 278 L430 295 L470 320 L480 340 L480 480 L0 480Z" fill="url(#hi)"/>
+            <path d="M0 480 L0 420 L120 398 L280 388 L420 400 L480 412 L480 480Z" fill="#176B40"/>
+            <rect x="180" y="400" width="120" height="68" rx="4" fill="#FFFBF2"/>
+            <polygon points="172,402 240,365 308,402" fill="#FF6B5B"/>
+            <rect x="205" y="416" width="18" height="16" rx="3" fill="#FFD166"/>
+            <rect x="228" y="416" width="18" height="16" rx="3" fill="#FFD166" opacity=".7"/>
+            <rect x="260" y="416" width="18" height="16" rx="3" fill="#FFD166" opacity=".85"/>
+            <rect x="223" y="432" width="24" height="36" rx="3" fill="#1AA6B7"/>
+            <rect x="0" y="468" width="480" height="132" fill="#1AA6B7"/>
+            <path d="M20 488 Q60 478 100 488 T180 488 T260 488 T340 488 T420 488" stroke="rgba(255,255,255,.3)" stroke-width="2" fill="none"/>
+            <path d="M20 510 Q60 500 100 510 T180 510 T260 510 T340 510 T420 510" stroke="rgba(255,255,255,.18)" stroke-width="2" fill="none"/>
+            <circle cx="60" cy="540" r="8" fill="#FFD166"/>
+            <text x="240" y="578" text-anchor="middle" font-family="Fraunces,serif" font-size="11" font-weight="600" fill="rgba(255,255,255,.9)" font-style="italic">92 Caltragh Heights, Sligo</text>
+          </svg>
         </div>
       </div>
     </div>
 
-    <!-- VIDEO LINK -->
-    <div class="reveal" style="margin-top:2rem;background:linear-gradient(135deg,var(--coral),var(--purple));border-radius:20px;padding:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem">
-      <div>
-        <p style="font-family:'Righteous',sans-serif;font-size:1.2rem;color:#fff;margin-bottom:.3rem">🎬 Video Guides for the House</p>
-        <p style="font-size:.88rem;color:rgba(255,255,255,.8)">Short videos covering heating, hot water and the essentials. Worth a watch!</p>
+    <div class="r" style="margin-top:3.4rem">
+      <div class="sec-eyebrow">📶 WiFi</div>
+      <p style="font-size:.9rem;color:var(--mist)">Two networks, one password. Easy!</p>
+    </div>
+    <div class="wifi-pair r">
+      <div class="wifi-card">
+        <span class="wc-label">Main Network · Ground Floor</span>
+        <div class="wc-name">eir97665757</div>
+        <div class="wc-pass-row"><span class="wc-pass">grRKACPmgK</span><button class="wc-copy" onclick="cp('grRKACPmgK','cpa')">Copy <span id="cpa"></span></button></div>
       </div>
-      <a href="https://drive.google.com/drive/folders/1puCMTaW-IABgpZTt8w70DlqWIeo80uH1?usp=sharing" target="_blank" class="btn" style="background:#fff;color:var(--coral);font-size:.72rem">Watch Videos 👀</a>
+      <div class="wifi-card">
+        <span class="wc-label">Extended Network · Upstairs</span>
+        <div class="wc-name">eir97665757_EXT</div>
+        <div class="wc-pass-row"><span class="wc-pass">grRKACPmgK</span><button class="wc-copy" onclick="cp('grRKACPmgK','cpb')">Copy <span id="cpb"></span></button></div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card r" data-d="1">
+        <span class="ic-glyph">🔥</span>
+        <div class="ic-title">Heating</div>
+        <div class="ic-body">Wall switch near the coats — set to <strong>CONSTANT</strong> to turn on. The fireplace also heats the radiators and supplies hot water via solar panels.</div>
+        <div class="ic-note">Please turn off when heading out. Full video guide below!</div>
+      </div>
+      <div class="info-card r" data-d="2">
+        <span class="ic-glyph">♨️</span>
+        <div class="ic-title">Hot Water</div>
+        <div class="ic-body">Supplied by the fireplace and solar panels together — works a treat once it's going. Check the video guide if you need a hand getting started.</div>
+      </div>
+      <div class="info-card r" data-d="3">
+        <span class="ic-glyph">⚽</span>
+        <div class="ic-title">Outdoor Fun</div>
+        <div class="ic-body">A basketball court and a football in the back garden! All gear is in the outdoor container. Court lights are available for evening — please switch off after.</div>
+      </div>
+      <div class="info-card r" data-d="4">
+        <span class="ic-glyph">🪑</span>
+        <div class="ic-title">Shed Porch</div>
+        <div class="ic-body">Table and chairs on the shed porch — wonderful for morning coffee or evening drinks. The porch light button is on the shelves beside the back garden door.</div>
+      </div>
+      <div class="info-card r" data-d="5">
+        <span class="ic-glyph">📖</span>
+        <div class="ic-title">Guest Memory Book</div>
+        <div class="ic-body">A handwritten journal sits on the table. Leave a note — where you're from, your favourite moment, a hidden gem. Future guests cherish reading these.</div>
+      </div>
+      <div class="info-card r" data-d="6">
+        <span class="ic-glyph">🔒</span>
+        <div class="ic-title">Sheds</div>
+        <div class="ic-body">All sheds remain closed throughout your stay. Equipment for outdoor activities is kept in the outdoor container instead.</div>
+      </div>
+    </div>
+
+    <div class="video-box r">
+      <div class="vb-left">
+        <strong>🎬 Video guides for the house</strong>
+        <p>Step-by-step videos covering heating, hot water and the essentials — everything you need is right here.</p>
+      </div>
+      <a href="https://drive.google.com/drive/folders/1puCMTaW-IABgpZTt8w70DlqWIeo80uH1?usp=sharing" target="_blank" class="btn-primary" style="background:var(--sun);color:var(--ink)">Watch Videos</a>
     </div>
   </div>
 </section>
 
-<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#E3F6FF" d="M0,0 C240,60 480,0 720,30 C960,60 1200,0 1440,15 L1440,60 L0,60 Z"/></svg>
-
-<!-- ════ EXPLORE ════ -->
-<section class="section s-blue" id="explore">
+<!-- ACCESS -->
+<section class="section s-paper" id="access">
   <div class="container">
-    <div class="reveal">
-      <div class="sec-tag">🗺️ Explore Sligo</div>
-      <h2 class="sec-h2">Sligo is <span class="rainbow">AMAZING</span> 🤩</h2>
-      <p class="sec-body">Mountains, waterfalls, beaches and ancient history — all basically on your doorstep. Here's what you absolutely can't miss!</p>
-    </div>
-
-    <div class="exp-cat reveal">
-      <h3 class="exp-cat-title">🏔️ Mountains & Forests</h3>
-      <div class="exp-grid">
-        <div class="exp-card" data-d="1"><div class="exp-type">🥾 Iconic Hike</div><div class="exp-name">Knocknarea — Queen Maeve's Trail</div><div class="exp-desc">Panoramic views from the top. An ancient queen's cairn. One of the best hikes in Ireland — genuinely.</div></div>
-        <div class="exp-card" data-d="2"><div class="exp-type">🌲 Forest Walk</div><div class="exp-name">Benbulben Forest Walk</div><div class="exp-desc">Beneath Sligo's famous flat-topped mountain. Magical on a misty morning (and they're pretty common here 😂)</div></div>
-        <div class="exp-card" data-d="3"><div class="exp-type">🌊 Lake & Woods</div><div class="exp-name">Hazelwood — Lough Gill</div><div class="exp-desc">Beautiful family walks along the lake that inspired W.B. Yeats. Very peaceful!</div></div>
-        <div class="exp-card" data-d="4"><div class="exp-type">🏔️ Hidden Valley</div><div class="exp-name">Gleniff Horseshoe</div><div class="exp-desc">A secret valley ringed by mountains. You'll feel like you've stumbled onto a movie set.</div></div>
-      </div>
-    </div>
-
-    <div class="exp-cat reveal">
-      <h3 class="exp-cat-title">💦 Waterfalls</h3>
-      <div class="exp-grid">
-        <div class="exp-card"><div class="exp-type">🚶 Easy Walk</div><div class="exp-name">Glencar Waterfall</div><div class="exp-desc">Short walk, absolutely stunning. Great for all ages!</div></div>
-        <div class="exp-card"><div class="exp-type">⚡ Wow Factor</div><div class="exp-name">Devil's Chimney</div><div class="exp-desc">Ireland's tallest waterfall. Only flows after rain — but when it does, WOW. Time it right! 🌧️</div></div>
-      </div>
-    </div>
-
-    <div class="exp-cat reveal">
-      <h3 class="exp-cat-title">🏖️ Beaches</h3>
-      <div class="exp-grid">
-        <div class="exp-card"><div class="exp-type">🏄 Surf Beach</div><div class="exp-name">Strandhill</div><div class="exp-desc">Wild and windswept. Brilliant for surfing or just walking the dunes at sunset 🌅</div></div>
-        <div class="exp-card"><div class="exp-type">👨‍👩‍👧 Family Friendly</div><div class="exp-name">Rosses Point</div><div class="exp-desc">Calmer water, gorgeous coastal walk. Benbulben views from the shoreline 😍</div></div>
-        <div class="exp-card"><div class="exp-type">🌊 Drama!</div><div class="exp-name">Mullaghmore Head</div><div class="exp-desc">Cliffs, crashing Atlantic waves. One of the most dramatic spots in all of Ireland.</div></div>
-        <div class="exp-card"><div class="exp-type">🤫 Secret Spot</div><div class="exp-name">Aughris Head Loop</div><div class="exp-desc">Sligo's best-kept secret coastal walk. Barely any tourists. Keep it between us 😉</div></div>
-      </div>
-    </div>
-
-    <div class="exp-cat reveal">
-      <h3 class="exp-cat-title">🏛️ History & Culture</h3>
-      <div class="exp-grid">
-        <div class="exp-card"><div class="exp-type">⏳ 5,000 Years Old!</div><div class="exp-name">Carrowmore Megalithic Cemetery</div><div class="exp-desc">One of Ireland's largest ancient tomb complexes. Mind-blowing that it even exists tbh.</div></div>
-        <div class="exp-card"><div class="exp-type">🏰 Town Centre</div><div class="exp-name">Sligo Abbey</div><div class="exp-desc">A gorgeous 13th-century ruin right in the heart of Sligo town. Great photos!</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#E8FFF4" d="M0,30 C360,0 720,60 1080,20 C1260,0 1380,40 1440,30 L1440,60 L0,60 Z"/></svg>
-
-<!-- ════ ACCESS ════ -->
-<section class="section s-green" id="access">
-  <div class="container">
-    <div class="reveal">
-      <div class="sec-tag">🔑 Getting In</div>
-      <h2 class="sec-h2">4 Easy Steps <span class="rainbow">to get inside!</span></h2>
+    <div class="r">
+      <div class="sec-eyebrow">🔑 Arrival</div>
+      <h2 class="sec-h2">Getting in — four<br>easy steps</h2>
     </div>
     <div class="steps-row">
-      <div class="step-card reveal-pop" data-d="1">
-        <span class="step-num">1</span>
-        <div class="step-title">🚪 The Garden Gate</div>
-        <div class="step-desc">Push the lock on the gate <strong>upward</strong> — it pops open! Walk right in.</div>
-      </div>
-      <div class="step-card reveal-pop" data-d="2">
-        <span class="step-num">2</span>
-        <div class="step-title">🔒 Find the Key Box</div>
-        <div class="step-desc">On the <strong>left side</strong> — white and grey wall. The key lock box is mounted right there.</div>
-      </div>
-      <div class="step-card reveal-pop" data-d="3">
-        <span class="step-num">3</span>
-        <div class="step-title">📱 Your Code</div>
-        <div class="step-desc">We'll text you a one-time code <strong>1 hour before</strong> your check-in. Keep an eye on your phone!</div>
-      </div>
-      <div class="step-card reveal-pop" data-d="4">
-        <span class="step-num">4</span>
-        <div class="step-title">🎉 You're In!</div>
-        <div class="step-desc">The house is all yours! Message us any time — we're always happy to help.</div>
-      </div>
+      <div class="step r" data-d="1"><span class="step-n">1</span><div class="step-title">🚪 The Garden Gate</div><div class="step-desc">Push the lock upward — it releases and swings open. Walk right in.</div></div>
+      <div class="step r" data-d="2"><span class="step-n">2</span><div class="step-title">🔒 Key Lock Box</div><div class="step-desc">White and grey wall on your left inside. The key lock box is mounted there.</div></div>
+      <div class="step r" data-d="3"><span class="step-n">3</span><div class="step-title">📱 Your Code</div><div class="step-desc">A one-time code is sent to your phone exactly 1 hour before check-in.</div></div>
+      <div class="step r" data-d="4"><span class="step-n">4</span><div class="step-title">🎉 You're In!</div><div class="step-desc">The house is all yours — settle in and enjoy your stay in Sligo!</div></div>
     </div>
 
-    <div style="margin-top:4rem" class="reveal">
-      <h3 style="font-family:'Righteous',sans-serif;font-size:1.8rem;margin-bottom:1.5rem">📋 A Few Simple Rules</h3>
+    <div style="margin-top:4.2rem" class="r">
+      <div class="sec-eyebrow">📋 Guidelines</div>
+      <h2 class="sec-h2">A few simple<br>asks</h2>
     </div>
-    <div class="rule-cards">
-      <div class="rule-card reveal" data-d="1"><div class="rule-emoji">❤️</div><div><div class="rule-title">Treat the house like your own home</div><div class="rule-desc">This is our home — we'd love it if you treated it with a bit of care. Thank you!</div></div></div>
-      <div class="rule-card reveal" data-d="2"><div class="rule-emoji">💡</div><div><div class="rule-title">Switch off lights & heating when you head out</div><div class="rule-desc">Saves energy and we really appreciate it! 🙏</div></div></div>
-      <div class="rule-card reveal" data-d="3"><div class="rule-emoji">🔌</div><div><div class="rule-title">Don't unplug the smart devices</div><div class="rule-desc">Alexa and the smart lights need to stay plugged in to keep working properly.</div></div></div>
-      <div class="rule-card reveal" data-d="4"><div class="rule-emoji">🔐</div><div><div class="rule-title">Lock up when you leave</div><div class="rule-desc">Doors and windows — locked whenever you head out. Just to keep everything safe!</div></div></div>
-      <div class="rule-card reveal" data-d="5"><div class="rule-emoji">📲</div><div><div class="rule-title">Something wrong? Just let us know!</div><div class="rule-desc">We're quick to respond. Don't suffer in silence — ring or message us and we'll sort it fast.</div></div></div>
+    <div class="rule-list">
+      <div class="rule r" data-d="1"><span class="rule-emoji">❤️</span><div><div class="rule-title">Treat the house with care</div><div class="rule-desc">This is our home — we'd be grateful if you treated it as your own.</div></div></div>
+      <div class="rule r" data-d="2"><span class="rule-emoji">💡</span><div><div class="rule-title">Switch off lights and heating when heading out</div><div class="rule-desc">Saves energy and is very much appreciated.</div></div></div>
+      <div class="rule r" data-d="3"><span class="rule-emoji">🔌</span><div><div class="rule-title">Don't unplug the smart devices</div><div class="rule-desc">Alexa and the smart lights need to stay plugged in to function.</div></div></div>
+      <div class="rule r" data-d="4"><span class="rule-emoji">🔐</span><div><div class="rule-title">Lock up when you leave</div><div class="rule-desc">Doors and windows locked whenever you head out.</div></div></div>
+      <div class="rule r" data-d="5"><span class="rule-emoji">📖</span><div><div class="rule-title">Everything you need is in this guide</div><div class="rule-desc">From WiFi to waterfalls — have a read through and you'll be all set for your stay.</div></div></div>
     </div>
   </div>
 </section>
 
-<svg class="wiggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="#1A1A2E" d="M0,15 C300,60 600,0 900,40 C1100,65 1300,10 1440,30 L1440,60 L0,60 Z"/></svg>
-
-<!-- ════ CONTACT ════ -->
-<section class="section s-dark" id="contact">
+<!-- EXPLORE -->
+<section class="section s-sea" id="explore">
   <div class="container">
-    <div class="reveal">
-      <div class="sec-tag" style="background:var(--coral)">📞 Contact</div>
-      <h2 class="sec-h2 rainbow">We're Always Here! 👋</h2>
-      <p class="sec-body">Got a question? Need something sorted? Want a local tip? Ring us, text us, anything. We genuinely love hearing from our guests!</p>
+    <div class="two-col">
+      <div class="r-l">
+        <div class="sec-eyebrow">🗺️ Sligo Territory</div>
+        <h2 class="sec-h2">Everything on<br>your doorstep</h2>
+        <p class="sec-body">Sligo is one of Ireland's best-kept secrets. Mountains, waterfalls, ancient stones and wild Atlantic coast — all within 30 minutes of the house.</p>
+      </div>
+      <div class="r-r" style="font-family:'Fraunces',serif;font-size:.95rem;font-style:italic;color:rgba(255,255,255,.65);line-height:2;padding-top:1.2rem">
+        Knocknarea &nbsp;·&nbsp; Benbulben &nbsp;·&nbsp; Strandhill<br>
+        Glencar Waterfall &nbsp;·&nbsp; Mullaghmore<br>
+        Lough Gill &nbsp;·&nbsp; Aughris Head<br>
+        Carrowmore &nbsp;·&nbsp; Rosses Point<br>
+        Sligo Abbey &nbsp;·&nbsp; Lissadell House<br>
+        Streedagh Beach &nbsp;·&nbsp; Gleniff Horseshoe
+      </div>
     </div>
 
+    <div class="explore-cat r" style="margin-top:3.4rem">
+      <div class="explore-cat-heading">🏔️ Mountains & Forests</div>
+      <div class="explore-grid">
+        <div class="exp-card" data-d="1"><div class="exp-type">Iconic Hike</div><div class="exp-name">Knocknarea — Queen Maeve's Trail</div><div class="exp-desc">Panoramic coastal views. An ancient queen's cairn. One of the best hikes in all of Ireland.</div></div>
+        <div class="exp-card" data-d="2"><div class="exp-type">Forest Walk</div><div class="exp-name">Benbulben Forest Walk</div><div class="exp-desc">Gentle trails beneath Sligo's famous flat-topped mountain. Magical on a misty morning.</div></div>
+        <div class="exp-card" data-d="3"><div class="exp-type">Lake & Woodland</div><div class="exp-name">Hazelwood — Lough Gill</div><div class="exp-desc">Beautiful family walks along the lake that inspired Yeats. Peaceful and close to town.</div></div>
+        <div class="exp-card" data-d="4"><div class="exp-type">Hidden Valley</div><div class="exp-name">Gleniff Horseshoe</div><div class="exp-desc">A secret valley completely ringed by mountains. Feels like discovering something nobody else knows.</div></div>
+      </div>
+    </div>
+
+    <div class="explore-cat r">
+      <div class="explore-cat-heading">💦 Waterfalls</div>
+      <div class="explore-grid">
+        <div class="exp-card"><div class="exp-type">Easy Walk</div><div class="exp-name">Glencar Waterfall</div><div class="exp-desc">Short and stunning. Great for all ages.</div></div>
+        <div class="exp-card"><div class="exp-type">Seasonal Spectacle</div><div class="exp-name">Devil's Chimney</div><div class="exp-desc">Ireland's tallest waterfall — only flows after heavy rain. Worth timing your visit around it.</div></div>
+      </div>
+    </div>
+
+    <div class="explore-cat r">
+      <div class="explore-cat-heading">🏖️ Beaches & Coast</div>
+      <div class="explore-grid">
+        <div class="exp-card"><div class="exp-type">Surf Beach</div><div class="exp-name">Strandhill</div><div class="exp-desc">Wild and windswept. Brilliant for surfing or golden-hour dune walks.</div></div>
+        <div class="exp-card"><div class="exp-type">Calm & Family</div><div class="exp-name">Rosses Point</div><div class="exp-desc">Calmer water, gorgeous coastal walk, views of Benbulben from the shore.</div></div>
+        <div class="exp-card"><div class="exp-type">Atlantic Drama</div><div class="exp-name">Mullaghmore Head</div><div class="exp-desc">Dramatic cliffs and crashing waves. One of the most spectacular spots in Ireland.</div></div>
+        <div class="exp-card"><div class="exp-type">Hidden Gem</div><div class="exp-name">Aughris Head Loop</div><div class="exp-desc">Sligo's best-kept coastal secret. Almost no crowds.</div></div>
+        <div class="exp-card"><div class="exp-type">Historic Shipwreck</div><div class="exp-name">Streedagh Beach</div><div class="exp-desc">A vast, wild beach with Spanish Armada wreck history and dramatic dune walks.</div></div>
+      </div>
+    </div>
+
+    <div class="explore-cat r">
+      <div class="explore-cat-heading">🏛️ History & Culture</div>
+      <div class="explore-grid">
+        <div class="exp-card"><div class="exp-type">5,000 Years Old</div><div class="exp-name">Carrowmore Megalithic Cemetery</div><div class="exp-desc">One of Ireland's largest ancient tomb complexes. Quietly extraordinary.</div></div>
+        <div class="exp-card"><div class="exp-type">Town Centre</div><div class="exp-name">Sligo Abbey</div><div class="exp-desc">A beautiful 13th-century ruin right in the heart of Sligo town.</div></div>
+        <div class="exp-card"><div class="exp-type">Stately Home</div><div class="exp-name">Lissadell House & Gardens</div><div class="exp-desc">Georgian country house and gardens with deep ties to the Gore-Booth family and Irish history.</div></div>
+        <div class="exp-card"><div class="exp-type">Literary Pilgrimage</div><div class="exp-name">Yeats' Grave, Drumcliffe</div><div class="exp-desc">The final resting place of W.B. Yeats, beneath Benbulben — exactly where he wished to be.</div></div>
+        <div class="exp-card"><div class="exp-type">Local Culture</div><div class="exp-name">Sligo Farmers Market</div><div class="exp-desc">Saturday mornings in town — local cheese, baked goods, crafts and a proper sense of community.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DINING -->
+<section class="section s-cream" id="dine">
+  <div class="container">
+    <div class="r">
+      <div class="sec-eyebrow">🍽️ Dining</div>
+      <h2 class="sec-h2">Where to eat —<br>the best in town</h2>
+      <p class="sec-body">A selection of Sligo's most highly rated restaurants, based on consistent praise across reviews. From fine dining to the best burger in town.</p>
+    </div>
+    <div class="rest-grid">
+      <div class="rest-card r" data-d="1">
+        <div class="rest-top"><span class="rest-name">Eala Bhán</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Rockwood Parade, Sligo Town</div>
+        <div class="rest-desc">Fine dining with exquisite seafood and steak in a charming riverside setting. Consistently rated among the very best in Sligo.</div>
+        <span class="rest-tag">Special Occasion</span>
+      </div>
+      <div class="rest-card r" data-d="2">
+        <div class="rest-top"><span class="rest-name">Coach Lane at Donaghy's</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Lord Edward Street, Sligo Town</div>
+        <div class="rest-desc">A Sligo institution since the mid-1990s. Dry-aged Irish Angus steak, a tomahawk for two, and an extensive wine list with an on-site sommelier.</div>
+        <span class="rest-tag">Steak & Seafood</span>
+      </div>
+      <div class="rest-card r" data-d="3">
+        <div class="rest-top"><span class="rest-name">Hooked</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Garavogue River, Sligo Town</div>
+        <div class="rest-desc">Seasonal Irish produce with a menu that changes regularly. Brunch here is a genuine highlight, especially at weekends.</div>
+        <span class="rest-tag">Brunch & Seafood</span>
+      </div>
+      <div class="rest-card r" data-d="4">
+        <div class="rest-top"><span class="rest-name">Flipside</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Rockwood Parade, Sligo Town</div>
+        <div class="rest-desc">The best burger in Sligo, hands down. Locally sourced beef, proper fries, and "The Dictator" fried chicken burger is a signature dish.</div>
+        <span class="rest-tag">Casual & Burgers</span>
+      </div>
+      <div class="rest-card r" data-d="5">
+        <div class="rest-top"><span class="rest-name">Bistro Bianconi</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Sligo Town</div>
+        <div class="rest-desc">A little piece of Italy in Sligo. Properly authentic pasta and pizza, generous portions, and a warm atmosphere.</div>
+        <span class="rest-tag">Italian</span>
+      </div>
+      <div class="rest-card r" data-d="6">
+        <div class="rest-top"><span class="rest-name">Stoked</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Shore Road, Strandhill</div>
+        <div class="rest-desc">A genuine hidden gem above the Strand Bar. Globally-inspired sharing tapas — try the Korean cauliflower wings and the haddock bao bun. Often called the best restaurant in Sligo.</div>
+        <span class="rest-tag">Tapas & Sharing</span>
+      </div>
+      <div class="rest-card r" data-d="6">
+        <div class="rest-top"><span class="rest-name">Otto</span><span class="rest-stars">★★★★★</span></div>
+        <div class="rest-loc">Sligo Town</div>
+        <div class="rest-desc">A stylish wine bar and pizzeria with a wood-fired Valoriani oven at its heart. 48-hour proofed Neapolitan pizza, excellent small plates, and a beautifully curated wine list.</div>
+        <span class="rest-tag">Pizza & Wine Bar</span>
+      </div>
+      <div class="rest-card r" data-d="6">
+        <div class="rest-top"><span class="rest-name">Davis' Restaurant & Yeats Tavern</span><span class="rest-stars">★★★★☆</span></div>
+        <div class="rest-loc">Drumcliffe, just outside Sligo Town</div>
+        <div class="rest-desc">Family-run for over 35 years. Classic Irish cooking — slow-cooked beef, fresh Atlantic fish, and excellent Sunday roasts.</div>
+        <span class="rest-tag">Traditional Irish</span>
+      </div>
+      <div class="rest-card r"><div class="rest-top"><span class="rest-name">The Driftwood</span><span class="rest-stars">★★★★☆</span></div><div class="rest-loc">Rosses Point</div><div class="rest-desc">Sea views over Sligo Bay with a relaxed, family-friendly setup. Wonderful spot for a sunset dinner.</div><span class="rest-tag">Seaside Dining</span></div>
+      <div class="rest-card r"><div class="rest-top"><span class="rest-name">Hargadons Pub</span><span class="rest-stars">★★★★☆</span></div><div class="rest-loc">O'Connell Street, Sligo Town</div><div class="rest-desc">A historic Victorian pub serving hearty, proper pub food in beautifully preserved surroundings.</div><span class="rest-tag">Traditional Pub</span></div>
+      <div class="rest-card r"><div class="rest-top"><span class="rest-name">Lyons Cafe</span><span class="rest-stars">★★★★☆</span></div><div class="rest-loc">Sligo Town</div><div class="rest-desc">A Sligo classic for coffee, cake, and lunch. Lovely rooftop terrace seating in good weather.</div><span class="rest-tag">Café & Lunch</span></div>
+      <div class="rest-card r"><div class="rest-top"><span class="rest-name">Rugantino</span><span class="rest-stars">★★★★★</span></div><div class="rest-loc">Sligo Town</div><div class="rest-desc">The newest favourite in town — small, intimate, and quickly becoming a local go-to for excellent Italian food.</div><span class="rest-tag">Italian</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOPPING -->
+<section class="section s-coral" id="shop">
+  <div class="container">
+    <div class="r">
+      <div class="sec-eyebrow">🛒 Shops & Supermarkets</div>
+      <h2 class="sec-h2">Stock the kitchen<br>like a local</h2>
+      <p class="sec-body">Sligo town has every major supermarket within a few minutes' drive. Here's where locals actually go for specific things.</p>
+    </div>
+    <div class="shop-table r">
+      <div class="shop-row head">
+        <div class="shop-cell">Supermarket</div>
+        <div class="shop-cell">Location</div>
+        <div class="shop-cell">Best For</div>
+      </div>
+      <div class="shop-row"><div class="shop-cell shop-name">Tesco</div><div class="shop-cell shop-loc">O'Connell Street, Town Centre</div><div class="shop-cell shop-best">Biggest range overall — <strong>fresh fish counter</strong>, click & collect, latest opening hours (until 10pm).</div></div>
+      <div class="shop-row"><div class="shop-cell shop-name">Dunnes Stores</div><div class="shop-cell shop-loc">Cranmore Road</div><div class="shop-cell shop-best"><strong>Fresh meat & fish counter</strong>, plus a solid bakery section.</div></div>
+      <div class="shop-row"><div class="shop-cell shop-name">Lidl</div><div class="shop-cell shop-loc">Finisklin Road / Cranmore Rd</div><div class="shop-cell shop-best"><strong>Best value</strong> for everyday groceries. Open latest of all (8am–10pm).</div></div>
+      <div class="shop-row"><div class="shop-cell shop-name">Aldi</div><div class="shop-cell shop-loc">Cranmore Road</div><div class="shop-cell shop-best">Great for <strong>wine & specials</strong> — their weekly "Specialbuys" are worth a browse.</div></div>
+      <div class="shop-row"><div class="shop-cell shop-name">Kate's Kitchen</div><div class="shop-cell shop-loc">Castle Street, Town Centre</div><div class="shop-cell shop-best">A Sligo institution — <strong>artisan deli goods</strong>, local cheese, and great for a proper picnic hamper.</div></div>
+      <div class="shop-row"><div class="shop-cell shop-name">Sligo Farmers Market</div><div class="shop-cell shop-loc">Town Centre · Saturdays only</div><div class="shop-cell shop-best">The best spot for <strong>local produce, fresh bread and artisan goods</strong> — Saturday mornings only.</div></div>
+    </div>
+    <p style="margin-top:2rem;font-size:.85rem;color:rgba(255,255,255,.85);max-width:520px;line-height:1.7;font-weight:600" class="r">💡 Local tip: for the freshest fish, ask at the counter early in the day, or visit on Fridays when deliveries tend to arrive.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section s-paper" id="contact">
+  <div class="container">
+    <div class="r">
+      <div class="sec-eyebrow">📞 Get in Touch</div>
+      <h2 class="sec-h2">Have a question?</h2>
+      <p class="sec-body">For anything urgent during your stay, feel free to ring or send a message. For everything else, this guide has you covered — from WiFi to waterfalls!</p>
+    </div>
     <div class="contact-grid">
-      <div class="contact-card reveal-pop" data-d="1">
-        <span class="cc-emoji">📱</span>
-        <div class="cc-lbl">Primary</div>
-        <a href="tel:+353851513135" class="cc-val">+353 085 151 3135</a>
-      </div>
-      <div class="contact-card reveal-pop" data-d="2">
-        <span class="cc-emoji">☎️</span>
-        <div class="cc-lbl">Secondary</div>
-        <a href="tel:+34653950310" class="cc-val">+34 653 950 310</a>
-      </div>
-      <div class="contact-card reveal-pop" data-d="3">
-        <span class="cc-emoji">📸</span>
-        <div class="cc-lbl">Instagram</div>
-        <a href="https://www.instagram.com/thesligoretreat/" target="_blank" class="cc-val">@thesligoretreat</a>
-      </div>
-      <div class="contact-card reveal-pop" data-d="4">
-        <span class="cc-emoji">🎵</span>
-        <div class="cc-lbl">TikTok</div>
-        <a href="https://www.tiktok.com/@thesligoretreat" target="_blank" class="cc-val">@thesligoretreat</a>
-      </div>
+      <div class="c-card r" data-d="1"><span class="c-glyph">📱</span><div class="c-lbl">Primary</div><a href="tel:+353851513135" class="c-val">+353 085 151 3135</a></div>
+      <div class="c-card r" data-d="2"><span class="c-glyph">☎️</span><div class="c-lbl">Secondary</div><a href="tel:+34653950310" class="c-val">+34 653 950 310</a></div>
+      <div class="c-card r" data-d="3"><span class="c-glyph">📸</span><div class="c-lbl">Instagram</div><a href="https://www.instagram.com/thesligoretreat/" target="_blank" class="c-val">@thesligoretreat</a></div>
+      <div class="c-card r" data-d="4"><span class="c-glyph">🎵</span><div class="c-lbl">TikTok</div><a href="https://www.tiktok.com/@thesligoretreat" target="_blank" class="c-val">@thesligoretreat</a></div>
     </div>
-
-    <div style="margin-top:4rem" class="reveal">
-      <div class="sec-tag" style="background:var(--mint)">🌍 Languages</div>
-      <p style="font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:.5rem">This guide is also available in:</p>
-      <div class="lang-row">
+    <div style="margin-top:3rem" class="r">
+      <div class="sec-eyebrow">🌍 Other Languages</div>
+      <p style="font-size:.86rem;color:var(--mist);margin-bottom:1rem">This guide is available in:</p>
+      <div class="lang-pills">
         <a href="https://docs.google.com/document/d/1NSf2-adAR0unpbHWsAfCBWyroJA7uBAhtmJWuxmKxoM/edit" target="_blank" class="lang-pill">🇪🇸 Español</a>
         <a href="https://docs.google.com/document/d/1ORws0kV1GsQacg87iMrQInDq4DPQApiVWY4EbeC-bNM/edit" target="_blank" class="lang-pill">🇫🇷 Français</a>
         <a href="https://docs.google.com/document/d/160jPI0Wmlh4jnQz1s-9eoRduKutVpa6EEIlhRaksb6E/edit" target="_blank" class="lang-pill">🇩🇪 Deutsch</a>
@@ -765,145 +606,68 @@ nav.scrolled{box-shadow:0 4px 30px rgba(0,0,0,.1)}
   </div>
 </section>
 
-<!-- ════ SOCIAL ════ -->
 <section class="social-strip">
-  <div style="position:relative;z-index:2">
-    <h2 class="ss-title">Show Us Your Sligo! 📸</h2>
-    <p class="ss-sub">Tag us in your best shots — sunsets, summits, sandy toes — we repost everything!</p>
+  <div class="r">
+    <h2 class="ss-h2">Show us your Sligo! 📸</h2>
+    <p class="ss-body">Tag your best shots — sunsets, summits, sandy toes. We love seeing your photos!</p>
     <div class="ss-btns">
-      <a href="https://www.instagram.com/thesligoretreat/" target="_blank" class="ss-btn">📸 Instagram</a>
-      <a href="https://www.tiktok.com/@thesligoretreat" target="_blank" class="ss-btn">🎵 TikTok</a>
+      <a href="https://www.instagram.com/thesligoretreat/" target="_blank" class="ss-btn">Instagram</a>
+      <a href="https://www.tiktok.com/@thesligoretreat" target="_blank" class="ss-btn">TikTok</a>
     </div>
     <p class="ss-handle">@thesligoretreat</p>
   </div>
 </section>
 
-<!-- ════ FOOTER ════ -->
 <footer id="footer">
-  <div style="height:3px;background:linear-gradient(90deg,var(--coral),var(--sun),var(--grass),var(--sky),var(--purple),var(--pink),var(--coral));background-size:200% 100%;animation:rainbowShift 3s linear infinite"></div>
-
-  <!-- ADDRESS BLOCK -->
   <div class="foot-address">
-    <span class="foot-logo-big">The Sligo Retreat 🏡</span>
+    <span class="foot-wordmark">The Sligo Retreat</span>
     <div class="foot-addr-line">92 Caltragh Heights</div>
-    <div class="foot-addr-line">Sligo, County Sligo</div>
-    <div class="foot-addr-line">Ireland 🇮🇪</div>
+    <div class="foot-addr-line">Sligo · County Sligo · Ireland 🇮🇪</div>
     <div class="foot-phones">
-      <a href="tel:+353851513135" class="foot-phone">📱 +353 085 151 3135</a>
-      <a href="tel:+34653950310" class="foot-phone">☎️ +34 653 950 310</a>
+      <a href="tel:+353851513135" class="foot-phone">+353 085 151 3135</a>
+      <a href="tel:+34653950310" class="foot-phone">+34 653 950 310</a>
     </div>
     <a href="https://es.airbnb.com/rooms/898503441842034665" target="_blank" class="foot-airbnb">
-      <span class="airbnb-heart">❤️</span>
-      <div class="airbnb-text">
-        <span class="airbnb-small">Find us on</span>
-        <span class="airbnb-big">Airbnb</span>
-      </div>
+      <span class="airbnb-icon">❤️</span>
+      <div><span class="airbnb-pre">Book on</span><span class="airbnb-name">Airbnb</span></div>
     </a>
   </div>
-
-  <!-- SPONSORS -->
   <div class="sponsors-wrap">
-    <p class="sp-title">✨ Our Proud Local Partners & Sponsors ✨</p>
+    <p class="sp-label">Our Partners & Sponsors</p>
     <div class="sp-grid">
-      <div class="sp-card">
-        <span class="sp-emoji">🌊</span>
-        <div class="sp-name">Wild Atlantic Way</div>
-        <div class="sp-tag">Ireland's epic coastal route</div>
-      </div>
-      <div class="sp-card">
-        <span class="sp-emoji">🏄</span>
-        <div class="sp-name">Strandhill Surf Co.</div>
-        <div class="sp-tag">Surf lessons & board hire</div>
-      </div>
-      <div class="sp-card">
-        <span class="sp-emoji">☘️</span>
-        <div class="sp-name">Fáilte Ireland</div>
-        <div class="sp-tag">National tourism authority</div>
-      </div>
-      <div class="sp-card">
-        <span class="sp-emoji">🍺</span>
-        <div class="sp-name">The Sligo Tap Room</div>
-        <div class="sp-tag">Local craft beers & good craic</div>
-      </div>
-      <div class="sp-card">
-        <span class="sp-emoji">🥾</span>
-        <div class="sp-name">Benbulben Adventures</div>
-        <div class="sp-tag">Guided hikes & outdoor gear</div>
-      </div>
-      <div class="sp-card">
-        <span class="sp-emoji">🍀</span>
-        <div class="sp-name">Yeats Country Eats</div>
-        <div class="sp-tag">Best food in the west of Ireland</div>
-      </div>
+      <div class="sp-card"><span class="sp-glyph">🌊</span><div class="sp-name">Wild Atlantic Way</div><div class="sp-tag">Ireland's epic coastal route</div></div>
+      <div class="sp-card"><span class="sp-glyph">🏄</span><div class="sp-name">Strandhill Surf Co.</div><div class="sp-tag">Surf lessons & board hire</div></div>
+      <div class="sp-card"><span class="sp-glyph">☘️</span><div class="sp-name">Fáilte Ireland</div><div class="sp-tag">National tourism authority</div></div>
+      <div class="sp-card"><span class="sp-glyph">🍺</span><div class="sp-name">The Sligo Tap Room</div><div class="sp-tag">Local craft beers & great craic</div></div>
+      <div class="sp-card"><span class="sp-glyph">🥾</span><div class="sp-name">Benbulben Adventures</div><div class="sp-tag">Guided hikes & outdoor gear</div></div>
+      <div class="sp-card"><span class="sp-glyph">🍀</span><div class="sp-name">Yeats Country Eats</div><div class="sp-tag">Best food in the West of Ireland</div></div>
     </div>
   </div>
-
-  <!-- BOTTOM -->
   <div class="foot-bottom">
-    <span style="font-family:'Pacifico',cursive;font-size:.9rem;background:linear-gradient(135deg,var(--sun),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">The Sligo Retreat</span>
+    <span class="fb-logo">The Sligo Retreat</span>
     <div class="fb-links">
-      <a href="#house">The House</a>
-      <a href="#explore">Explore</a>
-      <a href="#access">Getting In</a>
-      <a href="#contact">Contact</a>
+      <a href="#house">The House</a><a href="#access">Getting In</a><a href="#explore">Explore</a>
+      <a href="#dine">Dining</a><a href="#shop">Shopping</a><a href="#contact">Contact</a>
     </div>
     <div class="fb-copy">© 2026 Julio Cantón García · All rights reserved</div>
   </div>
 </footer>
 
 <script>
-/* NAV */
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
 
-/* MOB MENU */
-document.getElementById('ham').onclick=()=>document.getElementById('mob-menu').classList.add('open');
+document.getElementById('ham').onclick=()=>document.getElementById('mob').classList.add('open');
 document.getElementById('mob-close').onclick=closeMob;
-function closeMob(){document.getElementById('mob-menu').classList.remove('open')}
+function closeMob(){document.getElementById('mob').classList.remove('open')}
 
-/* FLOATING EMOJIS */
-const emojis=['🌊','🏄','☘️','⛰️','🌈','🍀','🏡','🎉','⭐','🌸','🦋','🎈','🌺','🏖️','🌻'];
-const fc=document.getElementById('floaties');
-function spawnEmoji(){
-  const el=document.createElement('div');
-  el.className='floaty';
-  el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-  const dur=8+Math.random()*12;
-  el.style.cssText=`left:${Math.random()*100}%;font-size:${1.2+Math.random()*2}rem;animation-duration:${dur}s;animation-delay:${Math.random()*dur}s`;
-  fc.appendChild(el);
-  setTimeout(()=>el.remove(),(dur+5)*1000);
-}
-for(let i=0;i<18;i++)spawnEmoji();
-setInterval(spawnEmoji,3000);
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.r,.r-l,.r-r').forEach(el=>io.observe(el));
 
-/* REVEAL */
-const revEls=document.querySelectorAll('.reveal,.reveal-pop');
-new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in')}})
-},{threshold:.1,rootMargin:'0px 0px -30px 0px'}).observe=function(){};
+function cp(txt,id){navigator.clipboard.writeText(txt).then(()=>{const el=document.getElementById(id);if(el){el.textContent=' ✓';setTimeout(()=>el.textContent='',2000)}})}
 
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in')}})
-},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
-revEls.forEach(el=>io.observe(el));
-
-/* COPY WIFI */
-function copyWifi(pwd,id){
-  navigator.clipboard.writeText(pwd).then(()=>{
-    const el=document.getElementById(id);
-    if(el){el.textContent=' ✅ Copied!';setTimeout(()=>el.textContent='',2500)}
-  }).catch(()=>{
-    const el=document.getElementById(id);
-    if(el){el.textContent=' 📋 ';setTimeout(()=>el.textContent='',1500)}
-  });
-}
-
-/* SMOOTH SCROLL */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}
-  });
+  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}});
 });
 </script>
 </body>
